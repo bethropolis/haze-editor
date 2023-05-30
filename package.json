@@ -23,6 +23,8 @@
     "@codemirror/lang-html": "^6.4.3",
     "@codemirror/lang-javascript": "^6.1.8",
     "beercss": "^3.2.6",
+    "dexie": "^4.0.1-alpha.11",
+    "diff": "^5.1.0",
     "svelte-codemirror-editor": "^1.1.0"
   }
 }

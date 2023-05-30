@@ -21,6 +21,7 @@
         language = html();
         break;
     }
+    updateValue()
   }
 
   const updateCode = function () {

@@ -15,15 +15,18 @@
   -webkit-text-size-adjust: 100%;
 } */
 
-
 html {
   scroll-behavior: smooth;
   overflow-y: hidden;
   height: 100%;
 }
+a {
+  user-select: none;
+}
 html::-webkit-scrollbar {
   width: 1px;
 }
-body,nav {
+body,
+nav {
   transition: background 0.6s ease-in-out;
 }

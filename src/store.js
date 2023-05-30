@@ -1,16 +1,17 @@
 import { writable } from "svelte/store";
 
-export const active = writable("home");
+export const active = writable("changes");
+export const activeTab = writable(null);
 export const viewActive = writable("view");
 
 export const lang = writable("html");
 
 export const navItems = writable([
-  { icon: "home", label: "home" },
-  { icon: "widgets", label: "Explore" },
-  { icon: "arrow_back", label: "Left" },
+  { icon: "code", label: "code" },
+  { icon: "account_tree", label: "changes" },
   { icon: "arrow_forward", label: "Right" },
   { icon: "code", label: "Code" },
+  { icon: "widgets", label: "Explore" },
 ]);
 
 export const code = writable({
@@ -29,3 +30,6 @@ export const tabTwo = writable([{ label: "view", lang: null , activeStatus: true
 
 // Create a writable store to hold custom events
 export const customEventStore = writable({ name: '', data: null });
+
+// comment
+export const comment = writable('changed some stuff');

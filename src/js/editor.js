@@ -1,4 +1,4 @@
-import { code } from "../store";
+import { code, customEventStore } from "../store";
 
 export function clearEditor() {
   code.set({ html: "", css: "", js: "" });
@@ -8,4 +8,8 @@ export function clearEditor() {
 export function toggleDarkMode() {
   const body = document.querySelector("body");
   body.classList.toggle("dark");
+}
+
+export function setEvent(name) {
+  customEventStore.set({ name, data: null });
 }

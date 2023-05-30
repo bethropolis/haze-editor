@@ -1,18 +1,31 @@
 <script>
-  import { code, customEventStore } from "./../store.js";
-  import { createTemplate } from "./../js/template";
+import { code, customEventStore } from "./../store.js";
+import { createTemplate } from "./../js/template";
 
-  let viewer;
-  let updateView = function () {
+let viewer = null;
+
+function updateView() {
+  try {
     const combinedCode = createTemplate($code.html, $code.css, $code.js);
-    viewer.srcdoc = combinedCode;
-  };
-  $: if ($code && $code.html) updateView();
+    viewer.srcdoc = combinedCode || "Error: no combined code available";
+  } catch (error) {
+    console.log(`Error: ${error.message}`);
+  }
+}
 
-  $: $customEventStore.name == "update_code" && updateView();
+$: if ($code && $code.html && viewer) updateView();
+
+$: if ($customEventStore?.name === "update_code") {
+  try {
+    updateView();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 </script>
 
-<iframe bind:this={viewer} />
+<iframe title="viewer" bind:this={viewer} />
 
 <style>
   iframe {

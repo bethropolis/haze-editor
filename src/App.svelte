@@ -1,25 +1,26 @@
 <script lang="ts">
-  import Code from "./lib/code.svelte";
+  import { active } from "./store.js";
+  import Codebox from "./lib/codebox.svelte";
   import Navigation from "./lib/navigation.svelte";
-  import Sidebox from "./lib/sidebox.svelte";
-  import Tabs from "./lib/tabs.svelte";
-  import { tabOne, tabTwo } from "./store";
+  import Changes from "./lib/changes.svelte";
 </script>
 
 <main>
   <Navigation />
 
   <div class="grid no-space responsive max">
-    <div class="s6">
-      <Tabs tabs={$tabOne} options={true}>
-         <Code />
-      </Tabs>
-    </div>
-    <div class="s6">
-      <Tabs tabs={$tabTwo} >
-        <Sidebox/>
-      </Tabs>
-    </div>
+    {#if $active === "code"}
+      <Codebox />
+    {/if}
+    {#if $active === "changes"}
+      <Changes/>
+    {/if}
+    {#if $active === "theme"}
+      <p>theme</p>
+    {/if}
+    {#if $active === "settings"}
+      <p>settings</p>
+    {/if}
   </div>
 </main>
 

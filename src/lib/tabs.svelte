@@ -1,25 +1,31 @@
 <script>
-	import Sideoptions from './Sideoptions.svelte';
-  import { customEventStore } from "./../store.js";
-  import { lang } from "../store";
+  import Sideoptions from "./Sideoptions.svelte";
+  import { activeTab, lang } from "../store";
   import Options from "./options.svelte";
+  import { onMount } from "svelte";
+
   export let options = false;
   export let tabs = [];
-  export let activeTab = tabs[0].label || null;
 
-  function setActiveTab(tab) {
-    activeTab = tab.label;
-    if (tab.lang) $lang = tab.lang;
-    const info = { name: "update_code", data: null };
-    $customEventStore = info;
+  let activeTabIndex = 0;
+
+  function setActiveTab(tabIndex) {
+    activeTabIndex = tabIndex;
+    $activeTab = tabs[tabIndex].label;
+    if (tabs[tabIndex].lang) $lang = tabs[tabIndex].lang;
   }
+
+  onMount(() => {
+    const index = tabs.findIndex((tab) => tab.label === $activeTab);
+    setActiveTab(index !== -1 ? index : 0);
+  });
 </script>
 
-<nav class="tabs left-align p-0 sticky large-text">
-  {#each tabs as tab}
+<nav class="tabs left-align p-0 large-text">
+  {#each tabs as tab, index}
     <a
-      class:active={activeTab === tab.label}
-      on:click={() => setActiveTab(tab)}
+      class:active={activeTabIndex === index}
+      on:click={() => setActiveTab(index)}
     >
       <p class="large-text">{tab.label}</p>
     </a>
@@ -30,12 +36,14 @@
   {#if options}
     <Options />
   {:else}
-  <Sideoptions/>
+    <Sideoptions />
   {/if}
 </nav>
 
-{#each tabs as tab}
-  <div class="page {activeTab === tab.label ? 'active' : ''}">
-    <slot />
-  </div>
-{/each}
+<div class="page-container">
+  {#each tabs as tab, index}
+    <div class="page" class:active={activeTabIndex === index}>
+      <slot />
+    </div>
+  {/each}
+</div>
