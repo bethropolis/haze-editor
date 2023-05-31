@@ -32,7 +32,7 @@
   </button>
   <button class="circle transparent">
     <i>more_vert</i>
-    <menu class="right no-wrap">
+    <menu class="left  no-wrap">
       <a href="#" on:click={editorClear}>Clear editor</a>
       <a href="#" on:click={exportCode}>export file</a>
       <a href="#"><label for="import"> import file</label></a>

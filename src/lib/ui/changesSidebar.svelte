@@ -3,15 +3,20 @@
   import Comments from "./comments.svelte";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
-  let comment = "";
 
+  let comment = "";
+  let commentsNumber = 0;
   async function handleclick() {
     let res = await commitFiles(comment);
     !res && alert("something went wrong");
   }
 
   async function handleSelect(event) {
-    dispatch("select", event.detail);
+    await dispatch("select", event.detail);
+  }
+  async function handleNumber(event) {
+    await dispatch("number", event.detail);
+    commentsNumber = event.detail;
   }
 </script>
 
@@ -33,13 +38,17 @@
   >
 
   <div class="list margin medium-margin">
-    <h5 class="grey-text">Commits</h5>
-    <Comments on:commit={handleSelect} />
+<h5 class="grey-text">Commits.<span class="badge medium-text primary-container fill">{commentsNumber}</span></h5>
+    <Comments on:commit={handleSelect} on:number={handleNumber} />
   </div>
 </main>
 
 <style>
   main {
     margin-top: 1em;
+  }
+  .badge{
+    top: 50%;
+    transform: translate(50%,-50%);
   }
 </style>

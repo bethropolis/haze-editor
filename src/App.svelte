@@ -8,7 +8,7 @@
 <main>
   <Navigation />
 
-  <div class="grid no-space responsive max">
+  <div class="grid no-space responsive no-margin">
     {#if $active === "code"}
       <Codebox />
     {/if}

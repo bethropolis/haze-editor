@@ -1,10 +1,16 @@
+// @ts-nocheck
 import { writable } from "svelte/store";
+import { db } from "./db";
 
-export const active = writable("changes");
+export const active = writable("code");
 export const activeTab = writable(null);
 export const viewActive = writable("view");
 
 export const lang = writable("html");
+const [ css = "",html = "", js = ""] = await db.save.toArray().then((files)=>{
+  return files;
+})
+
 
 export const navItems = writable([
   { icon: "code", label: "code" },
@@ -15,9 +21,9 @@ export const navItems = writable([
 ]);
 
 export const code = writable({
-  html: "",
-  css: "",
-  js: "",
+  html: html.content,
+  css: css.content,
+  js: js.content,
 });
 
 export const tabOne = writable([

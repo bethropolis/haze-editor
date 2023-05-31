@@ -23,13 +23,30 @@
 </script>
 
 <main>
+  {#if code}
   <pre><code bind:this={block} id="code"></code></pre>
+ 
+  {/if}
 </main>
 
 <style>
 pre {
+  width: 100%;
   overflow-x: auto;
-  max-height: calc(100vh - 70px); /* set a maximum height to limit the size of the pre element */
+  height: calc(100vh - 70px); /* set a maximum height to limit the size of the pre element */
 }
+  pre::-webkit-scrollbar {
+    width: 0;
+    height: 8px;
+  }
+
+  pre::-webkit-scrollbar-thumb {
+    background-color: var(--inverse-primary);
+    border-radius: 1px;
+  }
+
+  pre::-webkit-scrollbar-track {
+    background-color: var(--background);
+  }
 
 </style>

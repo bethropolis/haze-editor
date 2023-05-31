@@ -30,7 +30,7 @@ export function handleFileSelect(event) {
       const script = doc.querySelector("script:not([src])");
 
       // Remove script and style tags from body
-      Array.from(body.querySelectorAll("script, style")).forEach((el) =>
+      Array.from(body.querySelectorAll("script, style, link")).forEach((el) =>
         el.remove()
       );
 

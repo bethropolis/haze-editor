@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { db } from "../../db";
 
   let comments = [];
@@ -18,6 +18,16 @@
     // Dispatch the 'articleClick' event with the comment as payload
     dispatch('commit', comment);
   }
+
+  function sendNumber(){
+    dispatch('number', comments.length);
+  }
+
+  onMount(() => {
+    sendNumber();
+  })
+
+  $: comments && sendNumber();
 </script>
 
 <main>
@@ -36,7 +46,7 @@
   }
 
   main::-webkit-scrollbar {
-    width: 0;
+    width: .1em;
   }
 
   main::-webkit-scrollbar-thumb {
@@ -57,6 +67,6 @@
 
   /* Add hover effect */
   article:hover{
-    background-color: var(--primary-container) !important;
+    background-color: var(--inverse-primary) !important;
   }
 </style>

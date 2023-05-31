@@ -38,3 +38,57 @@ code .removed {
   background-color: var(--removed-line-color);
   padding: 0 0.2rem;
 }
+
+.ͼ2 .cm-gutters{
+  background-color: var(--active);
+}
+.ͼ2 .cm-activeLine , .ͼ2 .cm-activeLineGutter{
+  background-color: var(--primary-container);
+}
+
+.dark .ͼi {
+  color: #81c491;
+}
+
+.dark .ͼi {
+  color: #98c379;
+}
+
+.dark .ͼb {
+  color: #c678dd;
+}
+
+.cm-number, div[data-language="css"] .ͼb {
+  color: #d19a66;
+}
+
+.dark .ͼe{
+  color: #e06c75;
+}
+
+
+.dark .ͼg ,.dark .ͼj{
+  color: #61afef;
+}
+
+.cm-error {
+  color: #e06c75;
+}
+
+.cm-qualifier {
+  color: #abb2bf;
+}
+
+.cm-bracket {
+  color: #abb2bf;
+}
+
+.dark .ͼc ,.dark .ͼi {
+  color: #6ce09c;
+}
+
+.dark .ͼd {
+  color: #e06c75;
+}
+
+
