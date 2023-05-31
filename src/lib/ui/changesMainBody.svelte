@@ -15,7 +15,7 @@
       if (part.removed) {
         span.classList.add('removed');
       }
-      block.innerHTML = span.outerHTML;
+      block.innerHTML += span.outerHTML;
     });
   };
 
@@ -27,5 +27,9 @@
 </main>
 
 <style>
+pre {
+  overflow-x: auto;
+  max-height: calc(100vh - 70px); /* set a maximum height to limit the size of the pre element */
+}
 
 </style>

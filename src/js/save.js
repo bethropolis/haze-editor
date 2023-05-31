@@ -6,21 +6,14 @@ let unsubscribe = code.subscribe((value) => {
   writtenCode = value;
 });
 
-export const save = function () {
-  const html = {
-    name: "html",
-    content: writtenCode.html,
-  };
-  const css = {
-    name: "css",
-    content: writtenCode.css,
-  };
-  const js = {
-    name: "js",
-    content: writtenCode.js,
-  };
 
-  const files = [html, css, js];
+export const save = function() {
+  const files = [
+    { name: "html", content: writtenCode.html },
+    { name: "css", content: writtenCode.css },
+    { name: "js", content: writtenCode.js }
+  ];
+
   // @ts-ignore
-  db.files.bulkPut(files);
+  db.save.bulkPut(files);
 };

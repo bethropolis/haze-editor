@@ -1,20 +1,17 @@
 <script>
-  import { code } from "../../store.js";
-  import { commitFiles, getChanges } from "../../js/changes.js";
+  import { commitFiles } from "../../js/changes.js";
   import Comments from "./comments.svelte";
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
   let comment = "";
 
   async function handleclick() {
-    let res = await commitFiles($code.html, $code.css, $code.js, comment);
+    let res = await commitFiles(comment);
     !res && alert("something went wrong");
   }
 
-  
-  
   async function handleSelect(event) {
-    dispatch('select',event.detail)
+    dispatch("select", event.detail);
   }
 </script>
 
