@@ -2,17 +2,20 @@
   import Sideoptions from "./Sideoptions.svelte";
   import { activeTab, lang } from "../store";
   import Options from "./options.svelte";
-  import { onMount } from "svelte";
+  import { onMount, createEventDispatcher } from "svelte";
 
   export let options = false;
   export let tabs = [];
 
-  let activeTabIndex = 0;
+  export let activeTabIndex = 0;
+
+  const dispatch = createEventDispatcher();
 
   function setActiveTab(tabIndex) {
     activeTabIndex = tabIndex;
-    $activeTab = tabs[tabIndex].label;
-    if (tabs[tabIndex].lang) $lang = tabs[tabIndex].lang;
+    $activeTab = tabs[tabIndex]?.label;
+    if (tabs[tabIndex]?.lang) $lang = tabs[tabIndex]?.lang;
+    dispatch('tab', activeTabIndex);
   }
 
   onMount(() => {
@@ -22,15 +25,16 @@
 </script>
 
 <nav class="tabs left-align p-0 large-text">
-  {#each tabs as tab, index}
-    <a
-      class:active={activeTabIndex === index}
-      on:click={() => setActiveTab(index)}
-    >
-      <p class="large-text">{tab.label}</p>
-    </a>
-  {/each}
-
+  {#if tabs.length > 0}
+    {#each tabs as tab, index}
+      <a
+        class:active={activeTabIndex === index}
+        on:click={() => setActiveTab(index)}
+      >
+        <p class="large-text">{tab?.label}</p>
+      </a>
+    {/each}
+  {/if}
   <div class="max" />
 
   {#if options}

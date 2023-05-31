@@ -3,16 +3,18 @@
   import { commitFiles, getChanges } from "../../js/changes.js";
   import Comments from "./comments.svelte";
   import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   let comment = "";
-  let changes = {};
+
   async function handleclick() {
     let res = await commitFiles($code.html, $code.css, $code.js, comment);
     !res && alert("something went wrong");
   }
-  const dispatch = createEventDispatcher();
+
+  
   
   async function handleSelect(event) {
-    dispatch("select", event.detail);
+    dispatch('select',event.detail)
   }
 </script>
 
