@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { db } from "../db";
 import * as Diff from "diff";
+import { Err, Success, toast } from "./toast";
+import { Co } from "./confirm";
 
 export const commitFiles = async function (comment = "") {
   // current
@@ -63,7 +65,7 @@ export const commitFiles = async function (comment = "") {
   const files = [
     { name: "html", content: html },
     { name: "css", content: css },
-    { name: "js", content: js }
+    { name: "js", content: js },
   ];
 
   // @ts-ignore
@@ -100,8 +102,27 @@ export const getChanges = async function (commentId) {
 
     return changes;
   } catch (err) {
+    Err("Failed to get changes");
     return false;
   }
 };
 
-getChanges(1);
+export const clear = async function () {
+  const msg = "Are you sure you want to clear all data?";
+  const result = await Co(msg);
+
+  if (await result) {
+    // User confirmed clearing
+    await Promise.all([
+      db.changes.clear(),
+      db.comments.clear(),
+      db.files.clear(),
+      db.branches.clear(),
+    ]);
+    Success("data Cleared");
+    return true;
+  } else {
+    toast("Cancelled", "info");
+    return false
+  }
+};

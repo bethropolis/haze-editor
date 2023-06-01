@@ -1,5 +1,6 @@
 import { db } from "../db";
 import { setThemeMode } from "./editor";
+import { Err } from "./toast";
 
 const cacheName = "plugin-cache";
 const cache = await caches.open(cacheName);
@@ -11,7 +12,7 @@ export async function installPlugin(plugin) {
     await storePlugin(plugin);
     return true;
   } catch (error) {
-    console.error("Error installing plugin:", error);
+    Err("Error installing plugin: " + error);
     return false;
   }
 }
@@ -44,9 +45,11 @@ export async function applyThemeCSS(plugin) {
         setThemeMode(plugin?.mode);
       });
     } else {
+      Err(" Error styling theme not found");
       return false;
     }
   } catch (error) {
+    Err(" Error applying theme CSS");
     return false;
   }
 }
@@ -67,9 +70,11 @@ export async function executePluginScript(plugin) {
       script.setAttribute("data-type", "plugin");
       document.head.appendChild(script);
     } else {
+      Err(" Error Plugin Script not found");
       return false;
     }
   } catch (error) {
+    Err(" Error executing plugin script");
     return false;
   }
 }

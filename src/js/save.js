@@ -8,21 +8,22 @@ let unsubscribe = code.subscribe((value) => {
   writtenCode = value;
 });
 
-
-export const save = async function() {
+export const save = async function () {
   const files = [
     { name: "html", content: writtenCode.html },
     { name: "css", content: writtenCode.css },
-    { name: "js", content: writtenCode.js }
+    { name: "js", content: writtenCode.js },
   ];
-  
+
   let u = await undo();
 
   await db.save.bulkPut(files);
-  toast("saved", { aName: "undo", action: function() {
-     alert("saved");
-     db.save.bulkPut(undo);
-  }});
+  toast("saved","success", {
+    aName: "undo",
+    action: function () {
+      db.save.bulkPut(undo);
+    },
+  });
 };
 
 async function undo() {

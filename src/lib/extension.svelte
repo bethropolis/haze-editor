@@ -1,4 +1,5 @@
 <script>
+  import { Err} from "../js/toast";
   import Sideoptions from "./Sideoptions.svelte";
   import Plugin from "./ui/plugin.svelte";
 
@@ -12,7 +13,7 @@
       plugins = await response.json();
       backup = plugins;
     } catch (error) {
-      console.error("Error fetching plugins:", error);
+      Err("Error fetching plugins:")
     }
   }
 

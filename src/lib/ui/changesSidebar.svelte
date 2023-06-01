@@ -1,5 +1,6 @@
 <script>
-  import { commitFiles } from "../../js/changes.js";
+  import { clear, commitFiles } from "../../js/changes.js";
+  import { Err } from "../../js/toast.js";
   import Comments from "./comments.svelte";
   import { createEventDispatcher } from "svelte";
 
@@ -10,7 +11,7 @@
   let commentsNumber = 0;
   async function handleclick() {
     let res = await commitFiles(comment);
-    !res && alert("something went wrong");
+    !res && Err("Error committing files");
     commentBox.getComments();
   }
 
@@ -21,12 +22,22 @@
     await dispatch("number", event.detail);
     commentsNumber = event.detail;
   }
+  async function callClear(){
+    let cl = await clear();
+     if(cl) await dispatch("select", cl);
+  }
+
 </script>
 
 <nav>
   <h5 class="max small">Version Control</h5>
   <button class="circle transparent">
     <i>more_vert</i>
+    <menu class="right no-wrap">
+      <a>Item 1</a>
+      <a>Item 2</a>
+      <a on:click={callClear}>Clear VC data</a>
+    </menu>
   </button>
 </nav>
 

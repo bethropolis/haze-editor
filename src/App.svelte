@@ -4,6 +4,7 @@
   import Navigation from "./lib/navigation.svelte";
   import Changes from "./lib/changes.svelte";
   import Extension from "./lib/extension.svelte";
+  import Todos from "./lib/todos.svelte";
 </script>
 
 <main>
@@ -15,6 +16,9 @@
     {#if $active === "changes"}
       <Changes />
     {/if}
+    {#if $active === "Todo"}
+      <Todos/>
+    {/if}
     {#if $active === "plugins"}
       <Extension />
     {/if}
@@ -25,4 +29,7 @@
 </main>
 
 <style>
+  main{
+    height: 100vh;
+  }
 </style>
