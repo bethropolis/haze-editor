@@ -2,7 +2,7 @@
 import { writable } from "svelte/store";
 import { db } from "./db";
 
-export const active = writable("code");
+export const active = writable("plugins");
 export const activeTab = writable(null);
 export const viewActive = writable("view");
 
@@ -15,9 +15,9 @@ const [ css = "",html = "", js = ""] = await db.save.toArray().then((files)=>{
 export const navItems = writable([
   { icon: "code", label: "code" },
   { icon: "account_tree", label: "changes" },
-  { icon: "arrow_forward", label: "Right" },
+  { icon: "done_outline", label: "Todo" },
   { icon: "code", label: "Code" },
-  { icon: "widgets", label: "Explore" },
+  { icon: "widgets", label: "plugins" },
 ]);
 
 export const code = writable({

@@ -1,41 +1,46 @@
 <script>
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from "svelte";
   import { db } from "../../db";
 
   let comments = [];
   const dispatch = createEventDispatcher();
 
-  // @ts-ignore
-  db.comments
-    .orderBy("id")
-    .reverse()
-    .toArray()
-    .then(async (rows) => {
-      comments = rows;
-    });
-
+  export async function getComments() {
+    // @ts-ignore
+    await db.comments
+      .orderBy("id")
+      .reverse()
+      .toArray()
+      .then(async (rows) => {
+        comments = rows;
+      });
+  }
   function handleArticleClick(event, comment) {
     // Dispatch the 'articleClick' event with the comment as payload
-    dispatch('commit', comment);
+    dispatch("commit", comment);
   }
 
-  function sendNumber(){
-    dispatch('number', comments.length);
+  function sendNumber() {
+    dispatch("number", comments.length);
   }
 
-  onMount(() => {
-    sendNumber();
-  })
+  onMount(async () => {
+    await sendNumber();
+    await getComments();
+  });
 
   $: comments && sendNumber();
 </script>
 
 <main>
   {#each comments as comment}
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <article class="round no-elevate large-width fill" on:click={e => handleArticleClick(e, comment)}>
-    <h5>{comment.comment}</h5>
-  </article>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <article
+      class="round no-elevate large-width fill"
+      on:click={(e) => handleArticleClick(e, comment)}
+    >
+      <h5 class="tertiary-text">{comment.comment}</h5>
+    </article>
   {/each}
 </main>
 
@@ -46,12 +51,12 @@
   }
 
   main::-webkit-scrollbar {
-    width: .1em;
+    width: 0.1em;
   }
 
   main::-webkit-scrollbar-thumb {
     background-color: var(--secondary-container);
-    border-radius: 1px;  
+    border-radius: 1px;
   }
 
   main::-webkit-scrollbar-track {
@@ -66,7 +71,7 @@
   }
 
   /* Add hover effect */
-  article:hover{
+  article:hover {
     background-color: var(--inverse-primary) !important;
   }
 </style>

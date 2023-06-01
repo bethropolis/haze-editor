@@ -1,14 +1,17 @@
 <script>
-	import Emptystate from './emptystate.svelte';
+  import Emptystate from "./emptystate.svelte";
   import ChangesMainBody from "./changesMainBody.svelte";
   import Tabs from "./../tabs.svelte";
   import { nav } from "../../js/editor";
+  import { createEventDispatcher } from "svelte";
+
   export let changes = null;
   export let number;
   let tabs = [];
   let code = null;
   let activeTabIndex = 0;
 
+  const dispatch = createEventDispatcher();
   const updateTabs = async function () {
     let t = [];
     try {
@@ -36,9 +39,11 @@
     await updateCode();
   };
 
-  const toHome = () => {
-    nav("code");
-  };
+  async function handleSelect(event) {
+    await dispatch("select", event.detail);
+  }
+
+
 
   $: changes && updateTabs();
 </script>
@@ -48,12 +53,12 @@
     <Tabs {tabs} options={true} on:tab={updateActiveIndex}>
       <ChangesMainBody bind:code />
     </Tabs>
-  {:else if !number}
-     <Emptystate/>
-    {:else}
-    <Emptystate/>
-    
+  {:else if number}
+    <Emptystate no={1} on:commit={handleSelect} />
+  {:else}
+    <Emptystate />
   {/if}
+  
 </main>
 
 <style>

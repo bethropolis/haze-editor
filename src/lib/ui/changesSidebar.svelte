@@ -2,13 +2,16 @@
   import { commitFiles } from "../../js/changes.js";
   import Comments from "./comments.svelte";
   import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher();
 
+
+  const dispatch = createEventDispatcher();
+  let commentBox = null;
   let comment = "";
   let commentsNumber = 0;
   async function handleclick() {
     let res = await commitFiles(comment);
     !res && alert("something went wrong");
+    commentBox.getComments();
   }
 
   async function handleSelect(event) {
@@ -39,7 +42,7 @@
 
   <div class="list margin medium-margin">
 <h5 class="grey-text">Commits.<span class="badge medium-text primary-container fill">{commentsNumber}</span></h5>
-    <Comments on:commit={handleSelect} on:number={handleNumber} />
+    <Comments on:commit={handleSelect} on:number={handleNumber} bind:this={commentBox}/>
   </div>
 </main>
 

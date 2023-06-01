@@ -9,6 +9,14 @@ export function toggleDarkMode() {
   const body = document.querySelector("body");
   body.classList.toggle("dark");
 }
+export function setThemeMode(mode = "light") {
+  const body = document.querySelector("body");
+  if (mode === "dark") {
+    body.classList.add("dark");
+  } else {
+    body.classList.remove("dark");
+  }
+}
 
 export function setEvent(name) {
   customEventStore.set({ name, data: null });

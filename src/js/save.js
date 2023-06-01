@@ -1,5 +1,7 @@
+// @ts-nocheck
 import { db } from "../db";
 import { code } from "../store";
+import { toast } from "./toast";
 
 let writtenCode;
 let unsubscribe = code.subscribe((value) => {
@@ -7,13 +9,29 @@ let unsubscribe = code.subscribe((value) => {
 });
 
 
-export const save = function() {
+export const save = async function() {
   const files = [
     { name: "html", content: writtenCode.html },
     { name: "css", content: writtenCode.css },
     { name: "js", content: writtenCode.js }
   ];
+  
+  let u = await undo();
 
-  // @ts-ignore
-  db.save.bulkPut(files);
+  await db.save.bulkPut(files);
+  toast("saved", { aName: "undo", action: function() {
+     alert("saved");
+     db.save.bulkPut(undo);
+  }});
 };
+
+async function undo() {
+  const [html, css, js] = await Promise.all([
+    db.save.get("html").then((file) => file || ""),
+    db.save.get("css").then((file) => file || ""),
+    db.save.get("js").then((file) => file || ""),
+  ]);
+  let u = [html, css, js];
+
+  return u;
+}
