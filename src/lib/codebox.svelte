@@ -5,12 +5,12 @@
   import { tabOne, tabTwo } from "../store";
 </script>
 
-<div class="s6">
+<div class="s12 m6 l6">
   <Tabs tabs={$tabOne} options={true}>
     <Code />
   </Tabs>
 </div>
-<div class="s6">
+<div class="s6 m l">
   <Tabs tabs={$tabTwo}>
     <Sidebox />
   </Tabs>

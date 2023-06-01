@@ -1,31 +1,29 @@
 <script>
-    // similar to src/lib/ui/changesSidebar.svelte but this is for todos
-    let todo = "";
+  import { createTodo } from "../../js/todo";
 
-    async function handleclick() {
-        
-    }
+  let todo = '';
+
+  async function handleClick() {
+    await createTodo(todo);
+    todo = '';
+  }
 </script>
 
+<main>
+  <nav class="small-padding">
+    <h5 class="max small">Todos</h5>
+  </nav>
+  <div class="field textarea label border small">
+    <textarea bind:value={todo} id="comment" />
+    <label for="comment">Write todo</label>
+    <span class="helper">Write your new todo to add</span>
+  </div>
+  <button on:click={handleClick} disabled={todo == ''} class="button upper ">Add</button>
+</main>
 
+<style>
+ textarea{
+    width: 70%;
+ }
+</style>
 
-<main class="center-align">
-    <nav class="small-padding">
-        <h5 class="max small">Todos</h5>
-      </nav>
-    <div class="field textarea label border large">
-      <textarea bind:value={todo} id="comment" />
-      <label for="comment">write todo</label>
-      <span class="helper">write your new todo to add</span>
-    </div>
-    <button on:click={handleclick} disabled={todo == ""} class="button upper"
-      >Add</button
-    >
-  </main>
-
-  <style>
-    .badge{
-      top: 50%;
-      transform: translate(50%,-50%);
-    }
-  </style>

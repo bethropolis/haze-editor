@@ -12,6 +12,7 @@ db.version(1).stores({
     users: "++id,&username",
     comments: "++id,userId,comment",
     branches: "++id,&branch,user",
+    todos: "++id,userId,comment,done,removed",
   });
 
  db.branches.put({

@@ -22,6 +22,7 @@
     const index = tabs.findIndex((tab) => tab.label === $activeTab);
     setActiveTab(index !== -1 ? index : 0);
   });
+  
 </script>
 
 <nav class="tabs left-align p-0 large-text">

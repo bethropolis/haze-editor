@@ -24,7 +24,7 @@
 </script>
 
 <main>
-  <button class="circle transparent">
+  <button class="circle transparent l m">
     <i>commit</i>
   </button>
   <button class="circle transparent" on:click={save}>

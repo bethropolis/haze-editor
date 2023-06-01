@@ -2,8 +2,8 @@
   import Emptystate from "./emptystate.svelte";
   import ChangesMainBody from "./changesMainBody.svelte";
   import Tabs from "./../tabs.svelte";
-  import { nav } from "../../js/editor";
   import { createEventDispatcher } from "svelte";
+  import { tabOne } from "../../store";
 
   export let changes = null;
   export let number;
@@ -20,6 +20,7 @@
           label: change,
           lang: change,
         };
+
         t.push(tabObject);
       });
     } catch (err) {
@@ -31,10 +32,13 @@
   };
 
   const updateCode = async function () {
-    code = await changes.differences[activeTabIndex];
+    const lang = tabs[activeTabIndex]?.lang;
+    const index = $tabOne.findIndex((tab) => tab.lang === lang);
+    code = await changes.differences[index];
   };
 
   const updateActiveIndex = async (event) => {
+    await updateTabs();
     activeTabIndex = event.detail;
     await updateCode();
   };
@@ -42,7 +46,6 @@
   async function handleSelect(event) {
     await dispatch("select", event.detail);
   }
-
 
 
   $: changes && updateTabs();
@@ -58,7 +61,6 @@
   {:else}
     <Emptystate />
   {/if}
-  
 </main>
 
 <style>

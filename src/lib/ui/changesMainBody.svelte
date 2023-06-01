@@ -4,20 +4,38 @@
   let block = null;
 
   const renderCode = () => {
-    if (!block) return
-    block.innerHTML = '';
-    code.forEach((part) => {
-      const span = document.createElement('span');
-      span.textContent = part.value;
-      if (part.added) {
-        span.classList.add('added');
+  if (!block) return;
+  const fragment = document.createDocumentFragment();
+  code.forEach((part) => {
+    const span = document.createElement('span');
+    const br = document.createElement('br');
+    span.textContent = part.value;
+    if (part.added) {
+      const lines = span.textContent.split('\n');
+      for (let i = 0; i < lines.length - 1; i++) {
+        if(lines[i].trim() == '') continue;
+        lines[i] = '+ ' + lines[i];
       }
-      if (part.removed) {
-        span.classList.add('removed');
+      span.textContent = lines.join('\n');
+      span.classList.add('added');
+    }
+    if (part.removed) {
+      const lines = span.textContent.split('\n');
+      for (let i = 0; i < lines.length ; i++) {
+        if(lines[i].trim() == '') continue;
+        lines[i] = '- ' + lines[i];
       }
-      block.innerHTML += span.outerHTML;
-    });
-  };
+      span.textContent = lines.join('\n');
+      span.classList.add('removed');
+    }
+    fragment.appendChild(span);
+    fragment.appendChild(br);
+  });
+  block.innerHTML = '';
+  block.appendChild(fragment);
+};
+
+
 
   $: code && renderCode();
 </script>

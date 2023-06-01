@@ -8,7 +8,7 @@
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 } 
 
-html {
+html,body {
   scroll-behavior: smooth;
   overflow-y: hidden;
   height: 100%;
@@ -17,7 +17,7 @@ a {
   user-select: none;
 }
 html::-webkit-scrollbar {
-  width: 1px;
+  width: 0;
 }
 body,
 nav {

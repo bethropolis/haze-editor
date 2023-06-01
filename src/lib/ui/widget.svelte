@@ -35,18 +35,18 @@
 
 <div class="calendar">
   <div class="calendar-header">
-    <button class="calendar-btn" on:click={prevMonth}>
+    <a class="calendar-btn  white-text" on:click={prevMonth}>
       <i>arrow_back</i>
-    </button>
+    </a>
     <h2 class="calendar-title">
       {new Intl.DateTimeFormat("default", {
         month: "long",
         year: "numeric",
       }).format(currentDate)}
     </h2>
-    <button class="calendar-btn" on:click={nextMonth}>
+    <a class="calendar-btn white-text" on:click={nextMonth}>
       <i>arrow_forward</i>
-    </button>
+    </a>
   </div>
   <div class="calendar-body">
     <div class="calendar-weekdays">
@@ -60,7 +60,7 @@
           <span />
         {:else}
           <span
-            class="calendar-date text-white {currentDate.getDate() === day &&
+            class="calendar-date  {currentDate.getDate() === day &&
               'primary'}"
             class:selected={day === selectedDate}
             on:click={() => selectDate(day)}>{day}</span
@@ -92,7 +92,8 @@
   }
 
   .calendar-title {
-    margin: 0;
+    text-align: center;
+    margin: 0 auto;
   }
 
   .calendar-body {
@@ -121,7 +122,6 @@
     padding: 5px;
     cursor: pointer;
     border-radius: 50%;
-    color: var(--secondary);
   }
 
   .calendar-date.current-date {
