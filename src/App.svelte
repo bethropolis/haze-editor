@@ -5,6 +5,7 @@
   import Changes from "./lib/changes.svelte";
   import Extension from "./lib/extension.svelte";
   import Todos from "./lib/todos.svelte";
+  import Libraries from "./lib/libraries.svelte";
 </script>
 
 <main>
@@ -13,15 +14,21 @@
     {#if $active === "code"}
       <Codebox />
     {/if}
+    {#if $active === "Libraries"}
+      <Libraries />
+    {/if}
     {#if $active === "changes"}
       <Changes />
     {/if}
-    {#if $active === "Todo"}
+    <!-- {#if $active ===  "Todo"}
       <Todos/>
-    {/if}
+    {/if} -->
+    <div class="s12 grid" style:display={$active == "Todo"? '':'none'}>
+      <Todos/>
+    </div>
     {#if $active === "plugins"}
       <Extension />
-    {/if}
+    {/if}  
     {#if $active === "settings"}
       <p>settings</p>
     {/if}

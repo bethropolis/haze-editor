@@ -13,12 +13,15 @@ const [ css = "",html = "", js = ""] = await db.save.toArray().then((files)=>{
 
 
 export const navItems = writable([
-  { icon: "code", label: "code" },
-  { icon: "account_tree", label: "changes" },
-  { icon: "done_outline", label: "Todo" },
-  { icon: "code", label: "Code" },
-  { icon: "widgets", label: "plugins" },
+  { icon: "code", label: "code" }, // the code editor
+  { icon: "library_books", label: "Libraries" }, // package/library management for editor
+  { icon: "account_tree", label: "changes" },// version controll
+  { icon: "done_outline", label: "Todo" },// @todo app intergration
+  { icon: "widgets", label: "plugins" }, // extensions for edditor
 ]);
+
+
+
 
 export const code = writable({
   html: html.content,
