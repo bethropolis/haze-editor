@@ -17,7 +17,7 @@ export const navItems = writable([
   { icon: "library_books", label: "Libraries" }, // package/library management for editor
   { icon: "account_tree", label: "changes" },// version controll
   { icon: "done_outline", label: "Todo" },// @todo app intergration
-  { icon: "widgets", label: "plugins" }, // extensions for edditor
+  { icon: "extension", label: "plugins" }, // extensions for edditor
 ]);
 
 

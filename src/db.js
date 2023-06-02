@@ -12,6 +12,7 @@ db.version(1).stores({
     users: "++id,&username",
     comments: "++id,userId,comment",
     branches: "++id,&branch,user",
+    libs: "++id,&name,file, type",
     todos: "++id,userId,text,done,removed,color,timestamp",
   });
 
