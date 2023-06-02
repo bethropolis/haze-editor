@@ -4,13 +4,13 @@
   import Widget from './ui/widget.svelte';
   </script>
   
-  <div class="s3 large-height">
+  <div class="s3 large-height l m">
     <TodoSidebar/>
   </div>
-  <div class="s7 grid no-margin">
+  <div class="grid no-margin m8 l7 s12">
      <TodoBody/>
   </div>
-  <div class="s2 fill">
+  <div class="s2 fill m l">
     <Widget/>
   </div>
   

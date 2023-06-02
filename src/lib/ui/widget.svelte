@@ -1,50 +1,63 @@
-<script>
-  import { onMount } from "svelte";
 
-  let currentDate = new Date();
-  let selectedDate = null;
-  let daysInMonth = [];
-  let weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+ <script>
+   import { onMount, afterUpdate } from "svelte";
 
-  function generateCalendar() {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1).getDay();
-    const lastDate = new Date(year, month + 1, 0).getDate();
+let currentDate = new Date();
+let selectedDate = null;
+let daysInMonth = [];
+let weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+let formattedDate = "";
 
-    daysInMonth = Array.from({ length: lastDate }, (_, i) => i + 1);
-    daysInMonth = Array(firstDay).fill(null).concat(daysInMonth);
-  }
+function generateCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const lastDate = new Date(year, month + 1, 0).getDate();
 
-  function selectDate(date) {
-    selectedDate = date;
-  }
+  daysInMonth = Array.from({ length: lastDate }, (_, i) => i + 1);
+  daysInMonth = Array(firstDay).fill(null).concat(daysInMonth);
+}
 
-  function prevMonth() {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    generateCalendar();
-  }
+function selectDate(date) {
+  selectedDate = date;
+}
 
-  function nextMonth() {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    generateCalendar();
-  }
+function prevMonth() {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  generateCalendar();
+}
 
-  onMount(generateCalendar);
+function nextMonth() {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  generateCalendar();
+}
+
+onMount(() => {
+  generateCalendar();
+  updateFormattedDate();
+});
+
+afterUpdate(() => {
+  updateFormattedDate();
+});
+
+function updateFormattedDate() {
+  formattedDate = new Intl.DateTimeFormat("default", { month: "long", year: "numeric" }).format(currentDate);
+}
+
+function isCurrentDate(date) {
+  const today = new Date();
+  return currentDate.getMonth() === today.getMonth() && currentDate.getFullYear() === today.getFullYear() && date === today.getDate();
+}
 </script>
 
 <div class="calendar">
   <div class="calendar-header">
-    <a class="calendar-btn  white-text" on:click={prevMonth}>
+    <a class="calendar-btn" on:click={prevMonth}>
       <i>arrow_back</i>
     </a>
-    <h2 class="calendar-title">
-      {new Intl.DateTimeFormat("default", {
-        month: "long",
-        year: "numeric",
-      }).format(currentDate)}
-    </h2>
-    <a class="calendar-btn white-text" on:click={nextMonth}>
+    <h4 class="calendar-title">{formattedDate}</h4>
+    <a class="calendar-btn" on:click={nextMonth}>
       <i>arrow_forward</i>
     </a>
   </div>
@@ -57,14 +70,9 @@
     <div class="calendar-dates">
       {#each daysInMonth as day}
         {#if day === null}
-          <span />
+          <span></span>
         {:else}
-          <span
-            class="calendar-date  {currentDate.getDate() === day &&
-              'primary'}"
-            class:selected={day === selectedDate}
-            on:click={() => selectDate(day)}>{day}</span
-          >
+          <span class="calendar-date {isCurrentDate(day) && 'primary'}" class:selected={day === selectedDate} on:click={() => selectDate(day)}>{day}</span>
         {/if}
       {/each}
     </div>

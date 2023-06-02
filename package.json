@@ -25,6 +25,7 @@
     "beercss": "^3.2.6",
     "dexie": "^4.0.1-alpha.11",
     "diff": "^5.1.0",
+    "sortablejs": "^1.15.0",
     "svelte-codemirror-editor": "^1.1.0"
   }
 }

@@ -1,11 +1,23 @@
 <script>
   import { createTodo } from "../../js/todo";
+  import { customEventStore } from "../../store";
 
-  let todo = '';
+  let todo = "";
 
+  let colors = [
+    "purple",
+    "pink",
+    "orange",
+    "lime",
+    "teal",
+    "blue",
+  ];
+
+  let selected = colors[0];
   async function handleClick() {
-    await createTodo(todo);
-    todo = '';
+    await createTodo(todo, selected);
+    $customEventStore = { name: "add-todo", data: true };
+    todo = "";
   }
 </script>
 
@@ -18,12 +30,46 @@
     <label for="comment">Write todo</label>
     <span class="helper">Write your new todo to add</span>
   </div>
-  <button on:click={handleClick} disabled={todo == ''} class="button upper ">Add</button>
+  <div class="color">
+    <details >
+      <summary>color: {selected}</summary>
+      <ul class="grid large-space wrap">
+        {#each colors as color}
+          <li
+            class="s1 {color}5"
+            class:selected={color === selected}
+            on:click={() => (selected = color)}
+          >
+            <div class="tooltip top">{color}</div>
+          </li>
+        {/each}
+      </ul>
+    </details>
+  </div>
+  <div class="small-width center-align">
+    <button on:click={handleClick} disabled={todo == ""} class="button upper"
+      >Add</button
+    >
+  </div>
 </main>
 
 <style>
- textarea{
+  textarea {
     width: 70%;
- }
+  }
+  ul {
+    list-style-type: none;
+  }
+  .color {
+    margin: 2em 0;
+  }
+  ul li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .selected {
+    outline: 3px solid var(--primary-container);
+  }
 </style>
-

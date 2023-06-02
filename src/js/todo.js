@@ -1,49 +1,79 @@
-let todos = [
-  { id: 1, text: "Example Todo 1", done: false },
-  { id: 2, text: "Example Todo 2", done: true },
-];
+// @ts-nocheck
+import { db } from "../db";
 
 // Get all todos
 export async function getTodos() {
+  let todos = await db.todos.orderBy("timestamp").toArray();
   return todos;
 }
 
 // Create a new todo
-export async function createTodo(todoText) {
+export async function createTodo(todoText, color = "none") {
   const newTodo = {
-    id: todos.length + 1,
+    userId: 1,
     text: todoText,
     done: false,
+    removed: false,
+    color,
+    timestamp: Date.now(),
   };
-  todos.push(newTodo);
+  await db.todos.add(newTodo);
 }
 
 // Mark a todo as done
 export async function markAsDone(todo) {
-  const index = todos.findIndex((t) => t.id === todo.id);
-  if (index !== -1) {
-    todos[index].done = true;
-  }
+  await db.todos.where("id").equals(todo.id).modify({
+    done: true,
+  });
 }
 
 // Remove a todo
 export async function removeTodo(todo) {
-  todos = todos.filter((t) => t.id !== todo.id);
+  await db.todos.where("id").equals(todo.id).delete();
 }
 
 // Edit a todo
 export async function editTodo(editedTodo) {
-  const index = todos.findIndex((t) => t.id === editedTodo.id);
-  if (index !== -1) {
-    todos[index].text = editedTodo.text;
-  }
+  await db.todos.where("id").equals(editedTodo.id).modify({
+    text: editedTodo.text,
+    color: editedTodo.color,
+  });
 }
 
 // Toggle a todo done
 // Toggle a todo done
 export async function toggleTodo(todo) {
-  const index = todos.findIndex(({ id }) => id === todo.id);
-  if (index >= 0) {
-    todos[index].done = !todo.done;
+  await db.todos.where("id").equals(todo.id).modify({
+    done: !todo.done,
+  });
+}
+
+export function formatTimestamp(timestamp) {
+  const elapsedSeconds = Math.floor((Date.now() - timestamp) / 1000);
+  if (elapsedSeconds < 60) {
+    return elapsedSeconds ? `${elapsedSeconds}s`: "now";
   }
+
+  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+  if (elapsedMinutes < 60) {
+    return `${elapsedMinutes}m`;
+  }
+
+  const elapsedHours = Math.floor(elapsedMinutes / 60);
+  if (elapsedHours < 24) {
+    return `${elapsedHours}h`;
+  }
+
+  const elapsedDays = Math.floor(elapsedHours / 24);
+  if (elapsedDays < 7) {
+    return `${elapsedDays}d`;
+  }
+
+  const elapsedWeeks = Math.floor(elapsedDays / 7);
+  if (elapsedWeeks < 52) {
+    return `${elapsedWeeks}w`;
+  }
+
+  const elapsedYears = Math.floor(elapsedWeeks / 52);
+  return `${elapsedYears}y`;
 }
