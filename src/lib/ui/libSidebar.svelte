@@ -14,6 +14,7 @@
         name: lib.name,
         file: lib.latest,
         type,
+        active: true,
       });
       $customEventStore = { name: 'add-lib', data: true };
       addedLibs.push(lib);

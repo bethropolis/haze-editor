@@ -1,90 +1,159 @@
 <script>
+  // @ts-nocheck
+
   import { onMount } from "svelte";
   import { db } from "../../db";
   import { customEventStore } from "../../store";
+  import { Err } from "../../js/toast";
 
-  let libs = [];
   let csslibs = [];
   let jslibs = [];
+  let libUrl = "";
 
   async function getLibs() {
-    // @ts-ignore
-    libs = await db.libs.toArray();
+    const libs = await db.libs.toArray();
     csslibs = libs.filter((lib) => lib.type === "css");
-    console.log("🚀 ~ file: libMain.svelte:14 ~ getLibs ~ csslibs:", csslibs)
     jslibs = libs.filter((lib) => lib.type === "js");
-    
   }
 
-  async function editLib(lib) {
-    // Perform the edit operation for the selected library
-    // Update the library details in the database
-    // Implement your logic here
+  async function toggleActivate(lib) {
+    const updatedLib = { ...lib, active: !lib.active };
+    await db.libs.update(lib.id, updatedLib);
+    await getLibs();
   }
 
   async function deleteLib(lib) {
-    // Perform the delete operation for the selected library
-    // Remove the library from the database
-    // Implement your logic here
+    await db.libs.delete(lib.id);
+    await getLibs();
   }
-  onMount(() => getLibs()); 
+
+  const libAdd = function () {
+    let type = libUrl.split(".").pop();
+    if (type === "css" || type === "js") {
+      // @ts-ignore
+      db.libs.add({
+        name: "unnamed",
+        file: libUrl,
+        type,
+        active: true,
+      });
+
+      getLibs();
+    } else {
+      Err("Invalid file type");
+    }
+  };
+
+  onMount(async () => {
+    await getLibs();
+  });
 
   $: $customEventStore && $customEventStore.name === "add-lib" && getLibs();
 </script>
 
 <div class="grid s12 responsive main">
-  <div class="s12 large-padding box ">
+  <div class="s12 large-padding box">
     <nav>
       <h5>CSS Libraries</h5>
     </nav>
-    <div class="ist">
+    <div class="list fill">
       {#each csslibs as lib}
-        <div class="row padding ">
-          <label class="checkbox">
-            <input type="checkbox" />
+        <div class="row padding">
+          <label class="checkbox" on:click={() => toggleActivate(lib)}>
+            <input type="checkbox" checked={lib.active} />
             <span />
           </label>
           <div class="max">{lib.file}</div>
-          <a on:click={() => deleteLib(lib)}>
+          <a on:click={() => deleteLib(lib)} class="red-text">
             <i>delete</i>
           </a>
         </div>
       {/each}
     </div>
   </div>
-  <div class="s12 padding box" id="js">
+  <div class="s12 large-padding box">
     <nav>
       <h5>JavaScript Libraries</h5>
     </nav>
-    <div class="ist">
+    <div class="list fill">
       {#each jslibs as lib}
         <div class="row padding">
-          <label class="checkbox">
-            <input type="checkbox" />
+          <label class="checkbox" on:click={() => toggleActivate(lib)}>
+            <input type="checkbox" checked={lib.active} />
             <span />
           </label>
           <div class="max">{lib.file}</div>
-          <a on:click={() => deleteLib(lib)}>
+          <a on:click={() => deleteLib(lib)} class="red-text">
             <i>delete</i>
           </a>
         </div>
       {/each}
     </div>
   </div>
-    <div class="s12 row padding">
-        <div class="field border max">
-            <input type="text" placeholder="add a lib url"/>
-          </div>
-          <button>Add</button>
+  <div class="s12 row padding input-container">
+    <div class="field border max">
+      <input type="text" placeholder="Add a library URL" bind:value={libUrl} />
     </div>
+    <button on:click={libAdd}>Add</button>
+  </div>
 </div>
 
 <style>
-.main{
-    height: 100dvh;
-}
-.box{
-    height: 35dvh;
+  .main {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    height: 100vh;
+  }
+
+  .box {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .list {
+    min-height: 200px;
+    height: 100%;
     overflow-y: auto;
-}
+    padding: 1em 5px;
+  }
+
+  .list::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .list::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+  }
+
+  .list::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+    height: 10px;
+  }
+
+  .list::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  .list::-webkit-scrollbar-thumb:active {
+    background-color: #333;
+  }
+
+  .list::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .list::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  .padding {
+    padding: 1rem;
+  }
+
+  .input-container {
+    align-items: center;
+    justify-content: space-between;
+  }
 </style>
