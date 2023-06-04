@@ -4,7 +4,7 @@
 
 </script>
 
-<!-- markup (zero or more items) goes here -->
+<slot/>
 <button class="circle transparent" on:click={toggleDarkMode}>
   <i>dark_mode</i>
 </button>

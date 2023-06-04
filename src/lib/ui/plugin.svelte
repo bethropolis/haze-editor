@@ -1,22 +1,35 @@
 <script>
   import { onMount } from "svelte";
-  import { db } from "../../db";
-  import { applyThemeCSS, executePluginScript, installPlugin } from "../../js/plugin";
+  import { DB, db } from "../../db";
+  import {
+    applyThemeCSS,
+    executePluginScript,
+    installPlugin,
+    unloadPlugin,
+  } from "../../js/plugin";
 
   export let plugin;
   let isInstalled = false;
+  let choosen = DB.get("csstheme");
 
   function Install() {
     let i = installPlugin(plugin);
-    if(i) isInstalled = true;
+    if (i) isInstalled = true;
   }
 
   function Activate() {
     if (plugin.type === "theme") {
       applyThemeCSS(plugin);
-    }else if(plugin.type === "plugin"){
-        executePluginScript(plugin);
+    } else if (plugin.type === "plugin") {
+      executePluginScript(plugin);
     }
+    choosen = plugin.name;
+  }
+
+  async function unload() {
+    await unloadPlugin(plugin);
+    isInstalled = true;
+    choosen = "";
   }
 
   onMount(() => {
@@ -46,13 +59,15 @@
       {#if !isInstalled}
         <button class="primary" on:click={Install}>install {plugin.type}</button
         >
-      {:else}
+      {:else if choosen === plugin.name}
+        <button class="error" on:click={unload}>unload {plugin.type} </button>
+      {:else if isInstalled}
         <!-- apply theme CSS -->
-    <button class="tertiary" on:click={Activate}
+        <button class="tertiary" on:click={Activate}
           >{plugin.type === "theme" ? "apply" : "activate"}
           {plugin.type}</button
         >
       {/if}
-        </div>
+    </div>
   </article>
 {/if}

@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher, onMount  } from "svelte";
   import { nav } from "../../js/editor";
+  import { viewActive } from "../../store";
   const dispatch = createEventDispatcher();
 
   export let no = 0;
@@ -24,8 +25,18 @@
       button: "Select latest",
       action: function () {
         dispatch("commit", 'latest');
-      },
+      }
     },
+      {
+        icon: "terminal",
+        title: "Console not available",
+        message: 
+          "This feature is not available yet.",
+        button: "back to view",
+        action: function () {
+          $viewActive = "view";
+        }
+      },
   ];
 
   let values = {};

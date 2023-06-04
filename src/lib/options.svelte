@@ -1,7 +1,7 @@
 <script>
   import { exportCodeAsHtml, handleFileSelect } from "../js/export";
   import { code } from "../store";
-  import { clearEditor, setEvent } from "../js/editor.js";
+  import { clearEditor, nav, setEvent } from "../js/editor.js";
   import { save } from "../js/save";
 
   const exportCode = function () {
@@ -24,10 +24,10 @@
 </script>
 
 <main>
-  <button class="circle transparent l m">
+  <button class="circle transparent l m" on:click={()=> nav("changes")} aria-label="Commit">
     <i>commit</i>
   </button>
-  <button class="circle transparent" on:click={save}>
+  <button class="circle transparent" on:click={save} aria-label="Save">
     <i>save</i>
   </button>
   <button class="circle transparent">

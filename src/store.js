@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { writable } from "svelte/store";
-import { db } from "./db";
+import { DB, db } from "./db";
 
-export const active = writable("code");
+export const active = writable("settings");
 export const activeTab = writable(null);
 export const viewActive = writable("view");
 
@@ -14,15 +14,11 @@ const [ css = "",html = "", js = ""] = await db.save.toArray().then((files)=>{
 
 export const navItems = writable([
   { icon: "code", label: "code" }, // the code editor
-  { icon: "library_books", label: "Libraries" }, // package/library management for editor
   { icon: "account_tree", label: "changes" },// version controll
+  { icon: "library_books", label: "Libraries" }, // package/library management for editor
   { icon: "done_outline", label: "Todo" },// @todo app intergration
   { icon: "extension", label: "plugins" }, // extensions for edditor
 ]);
-
-
-
-
 
 export const code = writable({
   html: html.content,
@@ -36,10 +32,23 @@ export const tabOne = writable([
   { label: "js", lang: "js", placeholder: "write your js code here" },
 ]);
 
-export const tabTwo = writable([{ label: "view", lang: null , activeStatus: true}]);
+export const tabTwo = writable([
+  { label: "view", lang: null , activeStatus: true},
+  { label: "console", lang: null , activeStatus: false},
+
+]);
 
 // Create a writable store to hold custom events
 export const customEventStore = writable({ name: '', data: null });
 
-// comment
-export const comment = writable('changed some stuff');
+// settings
+const defaultSettings = [{
+  navLabels:{
+    value: true,
+    type: "switch",
+    label: "Navigation Labels"
+  },
+}]
+let s = DB.get("settings")||defaultSettings;
+
+export const settings = writable(s);

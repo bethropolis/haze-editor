@@ -1,3 +1,4 @@
+import { DB } from "../db";
 import { active, code, customEventStore } from "../store";
 
 export function clearEditor() {
@@ -7,7 +8,7 @@ export function clearEditor() {
 
 export function toggleDarkMode() {
   const body = document.querySelector("body");
-  body.classList.toggle("dark");
+  setThemeMode(body.classList.contains("dark") ? "light" : "dark");
 }
 export function setThemeMode(mode = "light") {
   const body = document.querySelector("body");
@@ -16,6 +17,7 @@ export function setThemeMode(mode = "light") {
   } else {
     body.classList.remove("dark");
   }
+  DB.set("theme", mode);
 }
 
 export function setEvent(name) {
@@ -25,3 +27,5 @@ export function setEvent(name) {
 export function nav(to) {
   active.set(to);
 }
+
+await setThemeMode(DB.get("theme"));

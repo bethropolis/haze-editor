@@ -12,14 +12,23 @@
   } from "../../js/todo.js";
   import { customEventStore } from "../../store.js";
   import Sortable from "sortablejs";
+
   let todos = [];
+  let done = [];
+  let undone = [];
   let editMode = null;
+  let todoDone, todoUndone;
   let editedText = "";
   let sortableContainer;
   let sortableContainer2;
 
+  let colors = ["purple", "pink", "orange", "lime", "teal", "blue"];
   async function fetchTodos() {
     todos = [...(await getTodos())];
+    done = todos.filter((todo) => todo.done);
+    undone = todos.filter((todo) => !todo.done);
+    todoDone = done.length;
+    todoUndone = undone.length;
   }
 
   async function markTodoAsDone(todo) {
@@ -45,7 +54,8 @@
   async function saveEditedTodo(todo) {
     await editTodo({
       ...todo,
-      text: editedText,
+      text: editedText || todo.text,
+      color: todo.color,
     });
     editMode = null;
     editedText = "";
@@ -56,36 +66,43 @@
   onMount(async () => {
     Sortable.create(sortableContainer, {
       group: {
-        name: "group1",
+        name: "shared",
         put: true,
       },
       animation: 250,
       handle: ".handle",
       ghostClass: "transparent",
+      onAdd: async (event) => {
+        const id = await Number(event.item.dataset.id);
+        const todo = await todos.find((todo) => {
+          return todo.id === id;
+        });
+        if (todo.done) {
+          await toggleTodo(todo);
+          todoDone = todoDone - 1;
+          todoUndone = todoUndone + 1;
+        }
+      },
+      onRemove: async (event) => {
+        const id = await Number(event.item.dataset.id);
+        let todo = await todos.find((todo) => {
+          return todo.id === id;
+        });
+        if (!todo.done) {
+          await toggleTodo(todo);
+          todoDone = todoDone + 1;
+          todoUndone = todoUndone - 1;
+        }
+      },
     });
 
     Sortable.create(sortableContainer2, {
       group: {
-        name: "group2",
+        name: "shared",
         put: true,
       },
       animation: 200,
       handle: ".handle",
-      onAdd: async (event) => {
-        const id = await Number(event.item.dataset.id);
-        const todo = await todos.find((todo) => todo.id === id);
-        if (todo) {
-          await toggle(todo);
-        }
-      },
-      onRemove: async (event) => {
-
-        const id = await Number(event.item.dataset.id);
-        const todo = await todos.find((todo) => todo.id === id);
-        if (todo) {
-          await toggle(todo);
-        }
-      },
     });
   });
 
@@ -97,15 +114,31 @@
 <div class="board s6">
   <nav class="small-padding fixed">
     <h5 class="max small">Todos</h5>
-    <div>{todos.filter((todo) => !todo.done).length}</div>
+    <div>{todoUndone}</div>
   </nav>
   <div class="bring" bind:this={sortableContainer}>
-    {#each todos.filter((todo) => !todo.done) as todo}
+    {#each undone as todo}
       {#if editMode === todo.id}
         <article class="{todo.color}2">
           <div class="field border field textarea extra border">
             <textarea bind:value={editedText} class="fill" />
             <span class="helper">Write your new todo to add</span>
+          </div>
+          <div class="color">
+            <details>
+              <summary>color: {todo.color}</summary>
+              <ul class="grid large-space wrap">
+                {#each colors as color}
+                  <li
+                    class="s1 {color}5"
+                    class:selected={color === todo.color}
+                    on:click={() => (todo.color = color)}
+                  >
+                    <div class="tooltip top">{color}</div>
+                  </li>
+                {/each}
+              </ul>
+            </details>
           </div>
           <nav>
             <button
@@ -150,11 +183,11 @@
 <div class="board s6">
   <nav class="small-padding fixed">
     <h5 class="max small">completed</h5>
-    <div>{todos.filter((todo) => todo.done).length}</div>
+    <div>{todoDone}</div>
   </nav>
   <div class="bring" bind:this={sortableContainer2}>
-    {#each todos.filter((todo) => todo.done) as todo}
-      <article class="{todo.color}2"  data-id={todo.id}>
+    {#each done as todo}
+      <article class="{todo.color}2" data-id={todo.id}>
         <h5 class="min small">{todo.text}</h5>
         <nav>
           <a class="" on:click={() => toggle(todo)}>
@@ -203,5 +236,20 @@
   article {
     width: 90%;
     color: #1f1f1f;
+  }
+  ul {
+    list-style-type: none;
+  }
+  .color {
+    margin: 2em 0;
+  }
+  ul li {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  .selected {
+    outline: 3px solid var(--primary-container);
   }
 </style>

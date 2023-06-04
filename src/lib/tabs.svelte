@@ -1,6 +1,6 @@
 <script>
+  import { activeTab, lang, viewActive } from "../store";
   import Sideoptions from "./Sideoptions.svelte";
-  import { activeTab, lang } from "../store";
   import Options from "./options.svelte";
   import { onMount, createEventDispatcher } from "svelte";
 
@@ -14,23 +14,26 @@
   function setActiveTab(tabIndex) {
     activeTabIndex = tabIndex;
     $activeTab = tabs[tabIndex]?.label;
-    if (tabs[tabIndex]?.lang) $lang = tabs[tabIndex]?.lang;
-    dispatch('tab', activeTabIndex);
+    tabs[tabIndex]?.lang ? ($lang = tabs[tabIndex]?.lang) : $viewActive = tabs[tabIndex]?.label;
+    dispatch("tab", activeTabIndex);
   }
 
   onMount(() => {
     const index = tabs.findIndex((tab) => tab.label === $activeTab);
     setActiveTab(index !== -1 ? index : 0);
   });
-  
 </script>
 
-<nav class="tabs left-align p-0 large-text">
+<nav class="tabs left-align p-0 large-text" role="tablist">
   {#if tabs.length > 0}
     {#each tabs as tab, index}
       <a
         class:active={activeTabIndex === index}
         on:click={() => setActiveTab(index)}
+        role="tab"
+        aria-selected={activeTabIndex === index}
+        aria-controls={"tab-panel-" + index}
+        title={tab?.label}
       >
         <p class="large-text">{tab?.label}</p>
       </a>
@@ -47,7 +50,14 @@
 
 <div class="page-container">
   {#each tabs as tab, index}
-    <div class="page" class:active={activeTabIndex === index}>
+    <div
+      class="page"
+      class:active={activeTabIndex === index}
+      role="tabpanel"
+      id={"tab-panel-" + index}
+      aria-labelledby={"tab-" + index}
+      tabindex={activeTabIndex === index ? 0 : -1}
+    >
       <slot />
     </div>
   {/each}

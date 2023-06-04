@@ -5,6 +5,7 @@
   import { db } from "../../db";
   import { customEventStore } from "../../store";
   import { Err } from "../../js/toast";
+  import Sideoptions from "../Sideoptions.svelte";
 
   let csslibs = [];
   let jslibs = [];
@@ -40,7 +41,7 @@
 
       getLibs();
     } else {
-      Err("Invalid file type");
+      Err("Only CSS and JS libraries are supported");
     }
   };
 
@@ -52,6 +53,10 @@
 </script>
 
 <div class="grid s12 responsive main">
+  <nav class="s12">
+    <div class="max"></div>
+    <Sideoptions />
+  </nav>
   <div class="s12 large-padding box">
     <nav>
       <h5>CSS Libraries</h5>
@@ -76,6 +81,7 @@
       <h5>JavaScript Libraries</h5>
     </nav>
     <div class="list fill">
+      {#if jslibs.length > 0}
       {#each jslibs as lib}
         <div class="row padding">
           <label class="checkbox" on:click={() => toggleActivate(lib)}>
@@ -88,6 +94,9 @@
           </a>
         </div>
       {/each}
+      {:else}
+         <p class="blue-text">Note: all libraries are cached on addition</p>
+      {/if}
     </div>
   </div>
   <div class="s12 row padding input-container">

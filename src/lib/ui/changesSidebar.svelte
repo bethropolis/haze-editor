@@ -34,8 +34,6 @@
   <button class="circle transparent">
     <i>more_vert</i>
     <menu class="right no-wrap">
-      <a>Item 1</a>
-      <a>Item 2</a>
       <a on:click={callClear}>Clear VC data</a>
     </menu>
   </button>

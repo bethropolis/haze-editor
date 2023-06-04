@@ -29,7 +29,7 @@
   };
 
   const updateValue = function (l = null) {
-    value = l ? $code[l] : $code[$lang];
+    value = $code[$lang];
   };
 
   onMount(() =>updateValue);
@@ -37,19 +37,18 @@
   // Subscribe to the custom event store
   const unsubscribe = customEventStore.subscribe((event) => {
     if (event.name == "update_code") {
-      updateValue();     
+      updateValue();
     }
   });
 
   // Unsubscribe from the custom event store when the component is destroyed
   onDestroy(unsubscribe);
-
-  $: value && updateCode();
 </script>
 
 <CodeMirror
   bind:value
   lang={language}
+  on:change={updateCode}
   styles={{
     "&": {
       width: "100%",

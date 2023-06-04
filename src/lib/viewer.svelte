@@ -1,28 +1,48 @@
 <script>
-import { code, customEventStore } from "./../store.js";
-import { createTemplate } from "./../js/template";
+  import { code, customEventStore } from "./../store.js";
+  import { createTemplate } from "./../js/template";
+  import { onMount } from "svelte";
 
-let viewer = null;
+  let viewer = null;
+  let combinedCode = null;
 
-function updateView() {
-  try {
-    const combinedCode = createTemplate($code.html, $code.css, $code.js);
-    viewer.srcdoc = combinedCode || "Error: no combined code available";
-  } catch (error) {
-    console.log(`Error: ${error.message}`);
+  async function updateView() {
+    try {
+      const combinedCode = await createTemplate(
+        $code.html,
+        $code.css,
+        $code.js
+      );
+      viewer.srcdoc = combinedCode || "";
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
   }
-}
 
-$: if ($code && $code.html && viewer) updateView();
+  onMount(async () => {
+    try {
+      combinedCode = await createTemplate($code.html, $code.css, $code.js);
+      viewer.srcdoc = combinedCode || "";
+    } catch (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  });
 
-$: if ($customEventStore?.name === "update_code") {
-  try {
-    updateView();
-  } catch (error) {
-    console.error(error);
+  $: if ($code && $code.html) {
+    const newCode = JSON.stringify([$code.html, $code.css, $code.js]);
+    if (newCode !== combinedCode) {
+      combinedCode = newCode;
+      updateView();
+    }
   }
-}
 
+  $: if ($customEventStore?.name === "update_code") {
+    const newCode = JSON.stringify([$code.html, $code.css, $code.js]);
+    if (newCode !== combinedCode) {
+      combinedCode = newCode;
+      updateView();
+    }
+  }
 </script>
 
 <iframe title="viewer" bind:this={viewer} />

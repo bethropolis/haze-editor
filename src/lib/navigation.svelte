@@ -1,4 +1,5 @@
 <script>
+	import { settings } from './../store.js';
   import { active, navItems } from "../store";
 </script>
 
@@ -10,7 +11,9 @@
       href="#"
     >
       <i>{item.icon}</i>
+      {#if $settings.navLabels.value}
       <span>{item.label}</span>
+      {/if}
     </a>
   {/each}
   <div class="max" />
