@@ -39,9 +39,9 @@
           const pluginData = JSON.parse(String(e.target.result));
           // Assuming the JSON file contains a single plugin object
           if (typeof pluginData === "object") {
-            plugins = [...plugins, pluginData];  
+            plugins = [...plugins, {...pluginData, dev: true}];  
             Success("Plugin uploaded successfully!");
-            DB.set("customPlugin", pluginData);
+            DB.set("customPlugin", {...pluginData, dev: true});
           } else {
             Err("Invalid plugin file. Please upload a valid JSON file.");
           }

@@ -4,8 +4,8 @@
   import { clearEditor, nav, setEvent } from "../js/editor.js";
   import { save } from "../js/save";
 
-  const exportCode = function () {
-    exportCodeAsHtml($code.html, $code.css, $code.js);
+  const exportCode = async function () {
+    await exportCodeAsHtml($code.html, $code.css, $code.js);
   };
 
   const importCode = async function (e) {

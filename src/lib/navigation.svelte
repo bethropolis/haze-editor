@@ -2,8 +2,10 @@
 	import { settings } from './../store.js';
   import { active, navItems } from "../store";
 </script>
-
-<nav class="m l left">
+<svelte:head>
+  <title>{$active}</title>
+</svelte:head>
+<nav class="m l left" >
   {#each $navItems as item}
     <a
       class:active={$active === item.label}
@@ -13,14 +15,18 @@
       <i>{item.icon}</i>
       {#if $settings.navLabels.value}
       <span>{item.label}</span>
+      {:else}
+      <div class="tooltip right">{item.label}</div>
       {/if}
     </a>
   {/each}
   <div class="max" />
-  <a href="#">
+  {#if $settings.backUpButton.value}
+  <a href="#" title="">
     <i class="up">arrow_upward</i>
-    <span>back up</span>
+   <div class="tooltip right">back up</div>
   </a>
+  {/if}
   <a href="#">
     <i
       class:active={$active === "settings"}

@@ -46,7 +46,9 @@ code .removed {
   background-color: var(--removed-line-color);
   padding: 0 0.2rem;
 }
-
+.cm-tooltip {
+  background-color: var(--primary-container) !important;
+}
 .ͼ2 .cm-gutters{
   background-color: var(--active);
 }

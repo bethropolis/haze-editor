@@ -1,8 +1,10 @@
 import { db } from "../db";
+import { settings } from "../store";
 // @ts-ignore
 const libs = await db.libs.toArray();
 let csslibs = "";
 let jslibs = "";
+let meta = '';
 async function getLibs() {
   csslibs = "";
   jslibs = "";
@@ -21,6 +23,10 @@ async function getLibs() {
     });
 }
 
+settings.subscribe(async (s) => {
+  meta = await s.metaData.value;
+})
+
 export async function createTemplate(html, css, js) {
   await getLibs();
   console.debug(csslibs, jslibs);
@@ -29,6 +35,7 @@ export async function createTemplate(html, css, js) {
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          ${meta}
           ${csslibs}
           ${jslibs}          
           <style>

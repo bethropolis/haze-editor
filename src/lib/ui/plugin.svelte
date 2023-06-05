@@ -1,4 +1,5 @@
 <script>
+	import Plugin from './plugin.svelte';
   import { onMount } from "svelte";
   import { DB, db } from "../../db";
   import {
@@ -55,6 +56,13 @@
         <p>{plugin.description}</p>
       </div>
     </div>
+    <div class="badge-list small-margin medium-space">
+      <span>By @{plugin.author|| "unknown"}</span>
+      <span>{plugin.version}</span>
+      {#if plugin.dev}
+        <span class="green5 white-text dev">dev</span>
+      {/if}
+    </div>
     <div class="small-margin">
       {#if !isInstalled}
         <button class="primary" on:click={Install}>install {plugin.type}</button
@@ -71,3 +79,16 @@
     </div>
   </article>
 {/if}
+
+<style>
+  .badge-list{
+    display: flex;
+    justify-content: space-between;
+  }
+  .dev{
+    font-size: 1rem;
+    font-family: sans-serif;
+    padding: 5px;
+    height: 30px;
+  }
+</style>

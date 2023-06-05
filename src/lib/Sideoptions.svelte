@@ -8,9 +8,6 @@
 <button class="circle transparent" on:click={toggleDarkMode}>
   <i>dark_mode</i>
 </button>
-<button class="circle transparent">
-  <i>info</i>
-</button>
 
 
 <style>

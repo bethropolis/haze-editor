@@ -42,13 +42,41 @@ export const tabTwo = writable([
 export const customEventStore = writable({ name: '', data: null });
 
 // settings
-const defaultSettings = [{
+const defaultSettings = {
   navLabels:{
     value: true,
     type: "switch",
     label: "Navigation Labels"
   },
-}]
+  todoDate:{
+    value: true,
+    type: "switch",
+    label: "Disable or Enable the Todo date widget"
+  },
+  backUpButton:{
+    value: true,
+    type: "switch",
+    label: "Disable or Enable the Back up button (used incase of scroll issues)"
+  },
+  metaData:{
+    value: '',
+    type: "textarea",
+    label: "Enter Head metadata for the iframe",
+    placeholder: "Example: <meta name='viewport'...>",
+  },
+  exportData:{
+    value: false,
+    type: "button",
+    label: "Export all your Data (import coming soon)",
+    short: "export"
+  },
+  deleteData:{
+    value: false,
+    type: "button",
+    label: "Delete all the data stored in your browser",
+    short: "delete"
+  }
+}
 let s = DB.get("settings")||defaultSettings;
 
-export const settings = writable(s);
+export const settings = writable(defaultSettings);
