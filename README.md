@@ -9,7 +9,7 @@ An HTML, CSS, JS code editor with version management, Todo app integration, plug
   - [Introduction](#introduction)
   - [Installation](#installation)
   - [Features](#features)
-    - [code editor](#code-editor)
+    - [Code editor](#code-editor)
     - [version management](#version-management)
     - [Library management](#library-management)
     - [Todo app](#todo-app)
@@ -22,7 +22,7 @@ An HTML, CSS, JS code editor with version management, Todo app integration, plug
   - [License](#license)
 
 ## Introduction
-Haze Editor is a powerful code editor that allows you to write and manage HTML, CSS, and JS code. It provides features like version control, library management, integration with a Todo app, and the ability to extend and customize the editor with plugins and themes.
+Haze Editor is a HTML, CSS, JS code editor with version management, Todo app integration, plugins, and more. It was a fun project to make, hope you enjoy it.
 
 ## Installation
 To install and run Haze Editor locally, follow these steps:
@@ -51,7 +51,7 @@ npm run build
 - more
 
 
-### code editor
+### Code editor
 The code editor in Haze Editor supports HTML, CSS, and JS. It provides features such as syntax highlighting, auto-completion, embedded browser preview, code export, and code import.
 
 ![](githubassets/code.png)
@@ -62,25 +62,25 @@ The code editor in Haze Editor supports HTML, CSS, and JS. It provides features 
 
 ### Library management
 This allows you to manage external JS & CSS libraries.
-The cdnjs API is used to search and get the latest version of a library.
+The `cdnjs API` is used to search and get the latest version of a library.
 
 ![](githubassets/Libraries.png)
 
 ### Todo app
 This is an in-built todo list app.
-You can keep track of your tasks, and mark them as done.
+You can use it to keep track of your tasks, and mark them as done.
 
 ![](githubassets/todo.png)
 
 ### Plugins
-Extend and customize the editor by adding plugins and themes. Plugins allow you to enhance the functionality of the editor, while themes provide different visual styles.
+Extend and customize the editor by adding `plugins` and `themes`. `Plugins` allow you to enhance the functionality of the editor, while `themes` provide different visual styles.
 
 ![](githubassets/plugins.png)
 
 ### More
 - Themes: Customize the visual appearance of the editor with various themes.
     ![](githubassets/dark.png)
-- Settings: Configure and fine-tune the editor according to your preferences.
+- Settings: Configure the editor according to your preferences.
     ![](githubassets/settings.png)
 
 ## Plugins
