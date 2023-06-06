@@ -80,6 +80,7 @@ Extend and customize the editor by adding `plugins` and `themes`. `Plugins` allo
 ### More
 - Themes: Customize the visual appearance of the editor with various themes.
     ![](githubassets/dark.png)
+    <br><br>
 - Settings: Configure the editor according to your preferences.
     ![](githubassets/settings.png)
 
