@@ -7,11 +7,11 @@
   let plugins = []; // Initially, no plugins
   let backup = [];
   let no = 0;
-
+  
   // Fetch plugins from the JSON file
   async function fetchPlugins() {
     try {
-      const response = await fetch("http://localhost/plugins/");
+      const response = await fetch("");
       plugins = await response.json();
       const custom = await DB.get("customPlugin")|| null;
       plugins = custom ? [...plugins, custom] : plugins;

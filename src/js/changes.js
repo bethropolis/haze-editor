@@ -5,6 +5,8 @@ import { Err, Success, toast } from "./toast";
 import { Co } from "./confirm";
 
 export const commitFiles = async function (comment = "") {
+   let added = 0;
+  let removed = 0;
   // current
   const html = await db.save.get("html").then((file) => {
     return file?.content || "";
@@ -46,6 +48,32 @@ export const commitFiles = async function (comment = "") {
     Diff.diffLines(jsStored, js, options),
   ]);
 
+  // Increment added and removed variables for each line difference
+  htmlDifferences.forEach((diff) => {
+    if (diff.added) {
+      added += diff.count;
+    } else if (diff.removed) {
+      removed += diff.count;
+    }
+  });
+
+  cssDifferences.forEach((diff) => {
+    if (diff.added) {
+      added += diff.count;
+    } else if (diff.removed) {
+      removed += diff.count;
+    }
+  });
+
+  jsDifferences.forEach((diff) => {
+    if (diff.added) {
+      added += diff.count;
+    } else if (diff.removed) {
+      removed += diff.count;
+    }
+  });
+
+
   // Insert the changes into the `changes` table
   const differences = [htmlDifferences, cssDifferences, jsDifferences];
   const filesChanged = differences.reduce(
@@ -56,7 +84,7 @@ export const commitFiles = async function (comment = "") {
   if (!filesChanged.length) return;
   if (comment == "") return;
 
-  let commentId = await commitComment(comment).then((id) => {
+  let commentId = await commitComment({comment,changes:{added, removed}}).then((id) => {
     return id;
   });
 
@@ -80,11 +108,13 @@ function didItChange(file) {
   return false;
 }
 
-export async function commitComment(comment, user = 1) {
+export async function commitComment(comment , user = 1) {
   let id = await db.comments
     .add({
-      comment,
+      comment: comment.comment,
       userId: user,
+      changes: comment.changes,
+      timestamp: Date.now(),
     })
     .then((id) => {
       return id;

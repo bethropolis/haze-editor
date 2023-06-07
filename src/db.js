@@ -7,7 +7,7 @@ db.version(1).stores({
   save: "name,content",
   plugins: "++id,&name, content,type, file,active",
   users: "++id,&username",
-  comments: "++id,userId,comment",
+  comments: "++id,userId,comment, changes,timestamp",
   branches: "++id,&branch,user",
   libs: "++id,&name,file, type,active",
   todos: "++id,userId,text,done,removed,color,timestamp",

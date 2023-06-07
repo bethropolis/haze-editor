@@ -40,6 +40,10 @@
       on:click={(e) => handleArticleClick(e, comment)}
     >
       <h5 class="tertiary-text">{comment.comment}</h5>
+      <div class="control">
+      <span class="added">++{comment.changes?.added||0}</span>
+      <span class="removed">--{comment.changes?.removed||0}</span>
+      </div>
     </article>
   {/each}
 </main>
@@ -68,6 +72,23 @@
     font-size: 18px;
     font-weight: bold;
     color: #333;
+  }
+  
+
+  article{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  .control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 50%;
+  }
+  .control > span{
+    background-color: transparent !important;
   }
 
   /* Add hover effect */

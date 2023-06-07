@@ -2,7 +2,7 @@
 import { writable } from "svelte/store";
 import { DB, db } from "./db";
 
-export const active = writable("settings");
+export const active = writable("code");
 export const activeTab = writable(null);
 export const viewActive = writable("view");
 

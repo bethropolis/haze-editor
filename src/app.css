@@ -1,14 +1,14 @@
-
 :root {
   --code-text-color: #c9d1d9;
   --code-added-color: #196c2e;
   --code-removed-color: #d73a49;
   --added-line-color: #28a74533;
   --removed-line-color: #cb243133;
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} 
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
-html,body {
+html,
+body {
   scroll-behavior: smooth;
   overflow-y: hidden;
   height: 100%;
@@ -24,24 +24,24 @@ nav {
   transition: background 0.6s ease-in-out;
 }
 
-div.cm-scroller::-webkit-scrollbar{
+div.cm-scroller::-webkit-scrollbar {
   width: 8px;
   background: var(--active);
 }
-div.cm-scroller::-webkit-scrollbar-thumb{
+div.cm-scroller::-webkit-scrollbar-thumb {
   background: var(--primary);
 }
 code {
   font-family: var(--font-family);
 }
 
-code .added {
+.added {
   color: var(--code-added-color);
   background-color: var(--added-line-color);
   padding: 0 0.2rem;
 }
 
-code .removed {
+.removed {
   color: var(--code-removed-color);
   background-color: var(--removed-line-color);
   padding: 0 0.2rem;
@@ -49,35 +49,37 @@ code .removed {
 .cm-tooltip {
   background-color: var(--primary-container) !important;
 }
-.ͼ2 .cm-gutters{
+.ͼ2 .cm-gutters {
   background-color: var(--active);
 }
-.ͼ2 .cm-activeLine , .ͼ2 .cm-activeLineGutter{
+.ͼ2 .cm-activeLine,
+.ͼ2 .cm-activeLineGutter {
   background-color: var(--primary-container);
 }
 
-.dark .ͼi {
+.dark code .ͼi {
   color: #81c491;
 }
 
-.dark .ͼi {
+.dark code .ͼi {
   color: #98c379;
 }
 
-.dark .ͼb {
+.dark code .ͼb {
   color: #c678dd;
 }
 
-.cm-number, div[data-language="css"] .ͼb {
+.cm-number,
+div[data-language="css"] .ͼb {
   color: #d19a66;
 }
 
-.dark .ͼe{
+.dark code .ͼe {
   color: #e06c75;
 }
 
-
-.dark .ͼg ,.dark .ͼj{
+.dark code .ͼg,
+.dark code .ͼj {
   color: #61afef;
 }
 
@@ -93,12 +95,11 @@ code .removed {
   color: #abb2bf;
 }
 
-.dark .ͼc ,.dark .ͼi {
+.dark code .ͼc,
+.dark code .ͼi {
   color: #6ce09c;
 }
 
-.dark .ͼd {
+.dark code .ͼd {
   color: #e06c75;
 }
-
-
