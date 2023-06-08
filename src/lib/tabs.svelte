@@ -24,7 +24,7 @@
   });
 </script>
 
-<nav class="tabs left-align p-0 large-text" role="tablist">
+<nav class="tabs left-align p-0 large-text">
   {#if tabs.length > 0}
     {#each tabs as tab, index}
       <a
@@ -61,4 +61,5 @@
       <slot />
     </div>
   {/each}
+  <slot name="x"/>
 </div>

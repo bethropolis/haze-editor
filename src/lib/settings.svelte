@@ -63,6 +63,7 @@
         </nav>
       </div>
     {/if}
+    <!-- if text put  -->
   {/each}
 </main>
 <div class="s6 about">

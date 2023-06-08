@@ -1,4 +1,5 @@
 <script>
+	import { pluginUrl } from './../store.js';
   import { DB } from "../db";
   import { Err, Success } from "../js/toast";
   import Sideoptions from "./Sideoptions.svelte";
@@ -11,7 +12,7 @@
   // Fetch plugins from the JSON file
   async function fetchPlugins() {
     try {
-      const response = await fetch("");
+      const response = await fetch($pluginUrl);
       plugins = await response.json();
       const custom = await DB.get("customPlugin")|| null;
       plugins = custom ? [...plugins, custom] : plugins;

@@ -1,4 +1,5 @@
 <script>
+	import { settings } from './../../store.js';
   import { createEventDispatcher, onMount  } from "svelte";
   import { nav } from "../../js/editor";
   import { viewActive } from "../../store";
@@ -37,13 +38,25 @@
           $viewActive = "view";
         }
       },
+      {
+        icon: "edit",
+        title: "Theme Editor",
+        message: "Theme Editor has been activated.",
+        button: "turn off",
+        action: function () {
+          $settings.ThemeEditMode.value = false;
+        }
+      }
   ];
 
   let values = {};
 
   onMount(() => {
     values = emptyTexts[no];
+
   });
+
+
 </script>
 
 <div class="large-height middle-align center-align">

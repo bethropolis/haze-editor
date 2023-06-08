@@ -38,6 +38,9 @@ export const tabTwo = writable([
 
 ]);
 
+
+// plugin url
+export const pluginUrl = writable("https://gist.githubusercontent.com/bethropolis/63b21fc999c51181d023346032e25f1a/raw/cb728f1ac5c8d528df1e80771d8466f14b6b7035/plugins.json");
 // Create a writable store to hold custom events
 export const customEventStore = writable({ name: '', data: null });
 
@@ -52,6 +55,17 @@ const defaultSettings = {
     value: true,
     type: "switch",
     label: "Disable or Enable the Todo date widget"
+  },
+  ThemeEditMode:{
+    value: true,
+    type: "switch",
+    label: "Edit the Theme directly in the css editor"
+  },
+  pluginUrl:{
+    value: "",
+    type: "text",
+    label: "Plugin URL",
+    placeholder: "https://gist.githubusercontent.com/bethropolis/63b21fc999c51181d023346032e25f1a/raw/cb728f1ac5c8d528df1e80771d8466f14b6b7035/plugins.json"
   },
   backUpButton:{
     value: true,

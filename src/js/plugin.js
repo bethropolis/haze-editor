@@ -62,6 +62,7 @@ export async function applyThemeCSS(plugin) {
           active: true,
         });
         DB.set("csstheme", plugin.name);
+        DB.set("css-theme", text);
       });
     } else {
       Err(" Error styling theme not found");

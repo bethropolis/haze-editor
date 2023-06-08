@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { db } from "../../db";
   import { customEventStore } from "../../store";
+  import { Err } from "../../js/toast";
 
   let searchQuery = "";
   let libs = [];
@@ -30,11 +31,16 @@
   };
 
   async function searchLibraries() {
+    try{ 
     const response = await fetch(
       `https://api.cdnjs.com/libraries?search=${searchQuery}&fields=filename,github&limit=10&search_fields=name`
     );
     const data = await response.json();
     libs = data.results;
+    }catch(err){
+      Err("Failed to fetch Libraries");
+    }
+    
   }
 
   //  a func to clear all libraries from the db
