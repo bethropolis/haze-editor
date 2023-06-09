@@ -1,17 +1,17 @@
 <script>
-	import Plugin from './plugin.svelte';
   import { onMount } from "svelte";
   import { DB, db } from "../../db";
   import {
     applyThemeCSS,
     executePluginScript,
     installPlugin,
+    removePlugin,
     unloadPlugin,
   } from "../../js/plugin";
 
   export let plugin;
   let isInstalled = false;
-  let choosen = DB.get("csstheme");
+  export let choosen = "";
 
   function Install() {
     let i = installPlugin(plugin);
@@ -31,6 +31,14 @@
     await unloadPlugin(plugin);
     isInstalled = true;
     choosen = "";
+    return
+  }
+
+  async function remove() {
+    if(!isInstalled) return;
+    if(choosen === plugin.name) await unload();
+    removePlugin(plugin);
+    isInstalled = false;
   }
 
   onMount(() => {
@@ -49,8 +57,21 @@
 
 {#if plugin}
   <article class="primary-container s3 medium-width wrap small-margin">
+<button class="chip circle absolute transparent top right">
+  <i>more_vert</i>
+  <menu class="left no-wrap">
+    <a on:click={()=> remove()}> Remove</a>
+  </menu>
+</button>
     <div class="row">
-      <img class="circle large" src={plugin.image} alt={plugin.name} />
+      <div class="circle">
+        {#if plugin.type === "plugin"}
+        <i class="large">extension</i>
+        {:else if plugin.type === "theme"}
+        <i class="large">
+          format_paint</i>
+        {/if}
+      </div>
       <div class="max">
         <h5>{plugin.name}</h5>
         <p>{plugin.description}</p>

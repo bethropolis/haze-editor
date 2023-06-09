@@ -26,9 +26,11 @@
 <main>
   <button class="circle transparent l m" on:click={()=> nav("changes")} aria-label="Commit">
     <i>commit</i>
+    <div class="tooltip bottom">Commit changes</div>
   </button>
   <button class="circle transparent" on:click={save} aria-label="Save">
     <i>save</i>
+    <div class="tooltip bottom">Save changes</div>
   </button>
   <button class="circle transparent">
     <i>more_vert</i>
