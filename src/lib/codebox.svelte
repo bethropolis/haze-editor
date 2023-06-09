@@ -22,15 +22,13 @@
 </div>
 {:else}
 <div class="s12 m6 l6">
-  <Tabs tabs={[$tabOne[1]]} options={true}>
+  <Tabs tabs={[$tabOne[1]]} options={false}>
     <PluginEditor/>
   </Tabs>
 </div>
 
 <div class="s6 m l">
-  <Tabs>
-    <Emptystate no={3} slot="x"/>
-  </Tabs>
+    <Emptystate no={3}/>
 </div>
 {/if}
 

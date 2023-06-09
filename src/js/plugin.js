@@ -30,6 +30,19 @@ async function storePlugin(plugin) {
   return true;
 }
 
+// remove plugin 
+export async function removePlugin(plugin) {
+  try {
+    await cache.delete(plugin.file);
+    await db.plugins.where("name").equals(plugin.name).delete();
+    return true;
+  }
+  catch (error) {
+    Err("Error removing plugin: " + error);
+    return false;
+  }
+}
+
 /**
  * Applies a CSS theme to the page from a plugin file.
  *

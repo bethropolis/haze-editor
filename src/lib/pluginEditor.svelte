@@ -1,4 +1,5 @@
 <script>
+	import { settings } from './../store.js';
   import {  customEventStore } from "../store.js";
   import CodeMirror from "svelte-codemirror-editor";
   import { css } from "@codemirror/lang-css";
@@ -28,6 +29,7 @@
 
   // function append style to heaad
   function appendStyle() {
+    if(!$settings.ThemeEditMode.value) return
     const s = document.querySelector("style[data-type='theme']");
     if (s) {
       document.head.removeChild(s);

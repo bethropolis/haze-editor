@@ -73,7 +73,7 @@
   <div class="field large prefix round fill">
     <i class="front">search</i>
     <input
-      placeholder="Search text"
+      placeholder="Search Libraries"
       bind:value={searchQuery}
       on:input={handleSearchInput}
     />

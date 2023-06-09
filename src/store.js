@@ -40,57 +40,65 @@ export const tabTwo = writable([
 
 
 // plugin url
-export const pluginUrl = writable("https://gist.githubusercontent.com/bethropolis/63b21fc999c51181d023346032e25f1a/raw/cb728f1ac5c8d528df1e80771d8466f14b6b7035/plugins.json");
+export const pluginUrl = writable("https://gist.githubusercontent.com/bethropolis/63b21fc999c51181d023346032e25f1a/raw/88e5da3443b1c6c0f71ec526bef7c2c9ce43670c/plugins.json");
 // Create a writable store to hold custom events
 export const customEventStore = writable({ name: '', data: null });
 
 // settings
-const defaultSettings = {
-  navLabels:{
+const defaultSettings =  {
+  navLabels: {
     value: true,
     type: "switch",
-    label: "Navigation Labels"
+    label: "Toggle Navigation Labels",
+    title: "Navigation"
   },
-  todoDate:{
+  todoDate: {
     value: true,
     type: "switch",
-    label: "Disable or Enable the Todo date widget"
+    label: "Toggle Todo Date Widget",
+    title: "Todo Date"
   },
-  ThemeEditMode:{
+  backUpButton: {
     value: true,
     type: "switch",
-    label: "Edit the Theme directly in the css editor"
+    label: "Toggle Back up Button (used in case of scroll issues)",
+    title: "Back up Button"
   },
-  pluginUrl:{
+  ThemeEditMode: {
+    value: false,
+    type: "switch",
+    label: "Edit the app Theme directly in CSS editor (you'll need to turn this feature off to return to edit)",
+    title: "Theme Edit Mode"
+  },
+  pluginUrl: {
     value: "",
     type: "text",
-    label: "Plugin URL",
-    placeholder: "https://gist.githubusercontent.com/bethropolis/63b21fc999c51181d023346032e25f1a/raw/cb728f1ac5c8d528df1e80771d8466f14b6b7035/plugins.json"
+    label: "Enter Plugin URL",
+    placeholder: "URL to plugin.json",
+    title: "Plugin URL"
   },
-  backUpButton:{
-    value: true,
-    type: "switch",
-    label: "Disable or Enable the Back up button (used incase of scroll issues)"
-  },
-  metaData:{
+  metaData: {
     value: '',
     type: "textarea",
-    label: "Enter Head metadata for the iframe",
+    label: "Enter Head Metadata for the iframe",
     placeholder: "Example: <meta name='viewport'...>",
+    title: "Head Metadata"
   },
-  exportData:{
+  exportData: {
     value: false,
     type: "button",
     label: "Export all your Data (import coming soon)",
-    short: "export"
+    short: "Export",
+    title: "Export Data"
   },
-  deleteData:{
+  deleteData: {
     value: false,
     type: "button",
     label: "Delete all the data stored in your browser",
-    short: "delete"
+    short: "Delete",
+    title: "Delete Data"
   }
-}
+};
 let s = DB.get("settings")||defaultSettings;
 
-export const settings = writable(defaultSettings);
+export const settings = writable(s);

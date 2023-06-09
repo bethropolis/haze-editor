@@ -19,7 +19,7 @@
       <div class="field middle-align margin">
         <nav>
           <div class="max">
-            <h6>{key}</h6>
+            <h6>{setting.title}</h6>
             <div>{setting.label}</div>
           </div>
           <label class="switch">
@@ -37,7 +37,7 @@
       <div class="field middle-align margin">
         <nav>
           <div class="max">
-            <h6>{key}</h6>
+            <h6>{setting.title}</h6>
             <div>{setting.label}</div>
           </div>
         </nav>
@@ -53,7 +53,7 @@
       <div class="field middle-align margin">
         <nav>
           <div class="max">
-            <h6>{key}</h6>
+            <h6>{setting.title}</h6>
             <div>{setting.label}</div>
           </div>
           <button
@@ -80,5 +80,18 @@
   }
   main > div {
     margin-top: 2em !important;
+  }
+  
+  main::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  main::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 1px;
+  }
+
+  main::-webkit-scrollbar-track {
+    background-color: var(--background);
   }
 </style>

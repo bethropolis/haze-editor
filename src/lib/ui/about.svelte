@@ -9,7 +9,7 @@
 
         <p>Haze is a fun text editor for everyone. (I had fun making it)</p>
         <div class="btns">
-            <button>
+            <button class="fill">
                 <a href="/">
                     Github
                 </a>

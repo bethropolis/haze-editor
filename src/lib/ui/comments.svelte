@@ -36,7 +36,7 @@
   {#each comments as comment}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <article
-      class="round no-elevate large-width fill"
+      class="round no-elevate large-width fill comment-item"
       on:click={(e) => handleArticleClick(e, comment)}
     >
       <h5 class="tertiary-text">{comment.comment}</h5>
