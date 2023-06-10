@@ -1,5 +1,5 @@
 <script>
-	import { active } from './../../store.js';
+  import { active } from "./../../store.js";
   import { onMount } from "svelte";
   import { DB, db } from "../../db";
   import {
@@ -13,10 +13,13 @@
   export let plugin;
   let isInstalled = false;
   export let choosen = "";
+  let isLoading = false;
 
-  function Install() {
-    let i = installPlugin(plugin);
+  async function Install() {
+    isLoading = true;
+    let i = await installPlugin(plugin);
     if (i) isInstalled = true;
+    isLoading = false;
   }
 
   async function Activate() {
@@ -29,21 +32,18 @@
   }
 
   async function unload() {
-    
     await unloadPlugin(plugin);
     isInstalled = true;
-    console.log("🚀 ~ file: plugin.svelte:37 ~ unload ~ isInstalled:", isInstalled)
     choosen = "";
-    return
+    return;
   }
 
   async function remove() {
-    if(!isInstalled) return;
-    if(choosen === plugin.name) await unload();
+    if (!isInstalled) return;
+    if (choosen === plugin.name) await unload();
     removePlugin(plugin);
     isInstalled = false;
   }
-
 
   onMount(() => {
     // @ts-ignore
@@ -57,35 +57,34 @@
         }
       });
   });
-
-
 </script>
 
 {#if plugin}
-  <article class="primary-container s12 m6 l3 center medium-width wrap small-margin">
-<button class="chip circle absolute transparent top right">
-  <i>more_vert</i>
-  <menu class="left no-wrap">
-    <a on:click={()=> remove()}> Remove</a>
-  </menu>
-</button>
+  <article
+    class="primary-container s12 m6 l3 center medium-width wrap small-margin"
+  >
+    <button class="chip circle absolute transparent top right">
+      <i>more_vert</i>
+      <menu class="left no-wrap">
+        <a on:click={() => remove()}> Remove</a>
+      </menu>
+    </button>
     <div class="row">
       <div class="circle">
         {#if plugin.type === "plugin"}
-        <i class="large">extension</i>
+          <i class="large">extension</i>
         {:else if plugin.type === "theme"}
-        <i class="large">
-          format_paint</i>
+          <i class="large"> format_paint</i>
         {/if}
       </div>
       <div class="max">
         <h5>{plugin.name}</h5>
 
-        <p>{plugin.description||''}</p>
+        <p>{plugin.description || ""}</p>
       </div>
     </div>
     <div class="badge-list small-margin medium-space">
-      <span>By @{plugin.author|| "unknown"}</span>
+      <span>By @{plugin.author || "unknown"}</span>
       <span>{plugin.version}</span>
       {#if plugin.dev}
         <span class="green5 white-text dev">dev</span>
@@ -93,8 +92,13 @@
     </div>
     <div class="small-margin">
       {#if !isInstalled}
-        <button class="primary" on:click={Install}>install {plugin.type}</button
-        >
+        <button class="primary" on:click={Install} disabled={isLoading}>
+          {#if isLoading}
+            installing... <a class="loader small tertiary" />
+          {:else}
+            install {plugin.type}
+          {/if}
+        </button>
       {:else if choosen === plugin.name}
         <button class="error" on:click={unload}>unload {plugin.type} </button>
       {:else if isInstalled}
@@ -109,17 +113,20 @@
 {/if}
 
 <style>
-  .badge-list{
+  .badge-list {
     display: flex;
     justify-content: space-between;
   }
-  .dev{
+  .dev {
     font-size: 1rem;
     font-family: sans-serif;
     padding: 5px;
     height: 30px;
   }
-  article{
+  article {
     height: fit-content;
   }
+  .loader {
+    border-color: var(--tertiary-container) !important;
+}
 </style>

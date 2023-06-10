@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { db } from "../../db";
   import { customEventStore } from "../../store";
-  import { Err } from "../../js/toast";
+  import { Err, Success } from "../../js/toast";
 
   let searchQuery = "";
   let libs = [];
@@ -58,6 +58,13 @@
     await searchLibraries();
   }
 
+  async function clearCache() {
+  const cacheName = "libs-cache";
+  const result = await caches.delete(cacheName);
+  Success(`Cache ${cacheName} deleted: ${result}`);
+}
+
+
   onMount(async () => {
     searchLibraries();
   });
@@ -70,6 +77,7 @@
       ><i>more_vert</i>
       <menu class="right no-wrap">
         <a href="#" on:click={clearLibraries}> Clear all</a>
+        <a href="#" on:click={clearCache}> Clear cache</a>
       </menu>
     </a>
   </nav>
