@@ -7,6 +7,8 @@
   import PluginEditor from "./pluginEditor.svelte";
   import Emptystate from "./ui/emptystate.svelte";
 
+
+let themeEditor =  [{ label: "Theme Editor", lang: "css", placeholder: "write your css code here" }];
 </script>
 {#if !$settings.ThemeEditMode.value }
 <div class="s12 m6 l6">
@@ -22,7 +24,7 @@
 </div>
 {:else}
 <div class="s12 m6 l6">
-  <Tabs tabs={[$tabOne[1]]} options={false}>
+  <Tabs tabs={themeEditor} options={false}>
     <PluginEditor/>
   </Tabs>
 </div>

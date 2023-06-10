@@ -53,7 +53,7 @@
     "&": {
       width: "100%",
       maxWidth: "100%",
-      height: "100dvh",
+      height: "calc(100dvh - 50px)",
     },
   }}
 />

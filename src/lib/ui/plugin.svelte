@@ -1,4 +1,5 @@
 <script>
+	import { active } from './../../store.js';
   import { onMount } from "svelte";
   import { DB, db } from "../../db";
   import {
@@ -18,18 +19,20 @@
     if (i) isInstalled = true;
   }
 
-  function Activate() {
+  async function Activate() {
     if (plugin.type === "theme") {
-      applyThemeCSS(plugin);
+      await applyThemeCSS(plugin);
     } else if (plugin.type === "plugin") {
-      executePluginScript(plugin);
+      await executePluginScript(plugin);
     }
     choosen = plugin.name;
   }
 
   async function unload() {
+    
     await unloadPlugin(plugin);
     isInstalled = true;
+    console.log("🚀 ~ file: plugin.svelte:37 ~ unload ~ isInstalled:", isInstalled)
     choosen = "";
     return
   }
@@ -40,6 +43,7 @@
     removePlugin(plugin);
     isInstalled = false;
   }
+
 
   onMount(() => {
     // @ts-ignore
@@ -53,10 +57,12 @@
         }
       });
   });
+
+
 </script>
 
 {#if plugin}
-  <article class="primary-container s3 medium-width wrap small-margin">
+  <article class="primary-container s12 m6 l3 center medium-width wrap small-margin">
 <button class="chip circle absolute transparent top right">
   <i>more_vert</i>
   <menu class="left no-wrap">
@@ -74,7 +80,8 @@
       </div>
       <div class="max">
         <h5>{plugin.name}</h5>
-        <p>{plugin.description}</p>
+
+        <p>{plugin.description||''}</p>
       </div>
     </div>
     <div class="badge-list small-margin medium-space">
@@ -111,5 +118,8 @@
     font-family: sans-serif;
     padding: 5px;
     height: 30px;
+  }
+  article{
+    height: fit-content;
   }
 </style>

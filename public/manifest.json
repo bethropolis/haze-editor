@@ -1,0 +1,23 @@
+{
+    "name": "Haze code Editor",
+    "short_name": "Haze",
+    "description": "An HTML, CSS, JS code editor with version management, Todo app integration, plugins, and more.",
+    "lang": "en",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#D0BCFF",
+    "background_color": "#D0BCFF",
+    "icons": [
+        {
+            "src": "web/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "web/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+        
+    ]
+  }

@@ -10,7 +10,7 @@
   }
 </script>
 
-<main class="s6">
+<main class="s12 l6 m12">
   <nav class="padding">
     <h5 class="max">Settings</h5>
   </nav>
@@ -64,9 +64,10 @@
       </div>
     {/if}
     <!-- if text put  -->
+    
   {/each}
 </main>
-<div class="s6 about">
+<div class="s6 l m about">
    <About/>
 </div>
 <style>
@@ -74,7 +75,7 @@
     height: 100dvh;
     overflow: auto;
   }
-  textarea {
+  textarea,input {
     width: 90%;
     margin: 0 2em;
   }

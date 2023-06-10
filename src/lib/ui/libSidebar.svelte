@@ -7,13 +7,14 @@
   let searchQuery = "";
   let libs = [];
   let addedLibs = [];
+  let isLoading = false;
 
   const cacheFile = async (fileUrl) => {
     const cacheName = "libs-cache";
     const cache = await caches.open(cacheName);
     const response = await fetch(fileUrl);
     const blob = await response.blob();
-    await cache.put(fileUrl,  new Response(blob));
+    await cache.put(fileUrl, new Response(blob));
     return true;
   };
   const libAdd = async function (lib) {
@@ -31,16 +32,18 @@
   };
 
   async function searchLibraries() {
-    try{ 
-    const response = await fetch(
-      `https://api.cdnjs.com/libraries?search=${searchQuery}&fields=filename,github&limit=10&search_fields=name`
-    );
-    const data = await response.json();
-    libs = data.results;
-    }catch(err){
+    isLoading = true;
+    try {
+      const response = await fetch(
+        `https://api.cdnjs.com/libraries?search=${searchQuery}&fields=filename,github&limit=10&search_fields=name`
+      );
+      const data = await response.json();
+      libs = data.results;
+      isLoading = false;
+    } catch (err) {
       Err("Failed to fetch Libraries");
+      isLoading = false;
     }
-    
   }
 
   //  a func to clear all libraries from the db
@@ -57,7 +60,7 @@
 
   onMount(async () => {
     searchLibraries();
-  })
+  });
 </script>
 
 <main>
@@ -77,6 +80,9 @@
       bind:value={searchQuery}
       on:input={handleSearchInput}
     />
+    {#if isLoading}
+      <a class="loader" />
+    {/if}
   </div>
   <hr />
   <div class="libs margin">
@@ -109,7 +115,8 @@
   <hr />
   <!-- powered by cdnjs -->
   <div class="horizontal small-margin">
-  <p>search powered by <span class="orange-text medium-text">cdn</span>js</p>
+    <p>search powered by <span class="orange-text medium-text">cdn</span>js</p>
+  </div>
 </main>
 
 <style>
@@ -119,6 +126,7 @@
   .libs {
     overflow-y: scroll;
     height: 70dvh;
+    padding-right: 0.5em;
   }
 
   .libs::-webkit-scrollbar-thumb {
@@ -132,7 +140,7 @@
   h4 {
     margin: 0;
     padding: 0;
-    width: 250px;
+    width: 237px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -9,7 +9,7 @@
   let backup = [];
   let no = 0;
   let isLoading = false;
-  let choosen = DB.get("csstheme");
+  let choosen = DB.get("activeTheme");
 
 
   // Fetch plugins from the JSON file
@@ -45,12 +45,12 @@
         try {
           const pluginData = JSON.parse(String(e.target.result));
           // Assuming the JSON file contains a single plugin object
-          if (typeof pluginData === "object") {
+          if (typeof pluginData === "object" && pluginData.name) {
             plugins = [...plugins, { ...pluginData, dev: true }];
             Success("Plugin uploaded successfully!");
             DB.set("customPlugin", { ...pluginData, dev: true });
           } else {
-            Err("Invalid plugin file. Please upload a valid JSON file.");
+            Err("Invalid plugin file. Please upload a valid JSON file with plugin object.");
           }
         } catch (error) {
           Err("Error reading plugin file. Please upload a valid JSON file.");
@@ -64,10 +64,10 @@
     }
   }
 
+
   // Call the fetchPlugins function to get the plugin data
   fetchPlugins();
 </script>
-
 <div class="s12">
   <header>
     <nav>
@@ -95,14 +95,14 @@
               <b>Load plugin/theme</b>
               <p class="wrap">This allows developers to upload and test their plugins and themes during development.</p>
               <nav>
-                <a class="inverse-link" href="">Help</a>
+                <a class="inverse-link" href="https://github.com/bethropolis/haze-editor/#plugins" target="_blank">Help</a>
               </nav>
             </div>
         </label>
       </Sideoptions>
     </nav>
   </header>
-  <div class="grid">
+  <div class="grid responsive">
     {#if plugins.length > 0}
       {#each plugins as plugin}
         <Plugin {plugin} bind:choosen />
@@ -114,6 +114,7 @@
           <p>Please wait getting plugins</p>
         {:else}
           <h5 class="center-align">No plugins found.</h5>
+        <a href="https://github.com/bethropolis/haze-editor/#plugins" target="_blank" class="primary-text"><p>Learn more</p></a>
         {/if}
       </div>
     {/if}

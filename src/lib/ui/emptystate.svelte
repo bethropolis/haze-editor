@@ -3,6 +3,7 @@
   import { createEventDispatcher, onMount  } from "svelte";
   import { nav } from "../../js/editor";
   import { viewActive } from "../../store";
+  import { DB } from '../../db.js';
   const dispatch = createEventDispatcher();
 
   export let no = 0;
@@ -45,6 +46,7 @@
         button: "turn off",
         action: function () {
           $settings.ThemeEditMode.value = false;
+          DB.set("settings", $settings);
         }
       }
   ];

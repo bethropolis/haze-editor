@@ -68,7 +68,7 @@ const defaultSettings =  {
     value: false,
     type: "switch",
     label: "Edit the app Theme directly in CSS editor (you'll need to turn this feature off to return to edit)",
-    title: "Theme Edit Mode"
+    title: "Theme Editor Mode"
   },
   pluginUrl: {
     value: "",

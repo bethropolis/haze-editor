@@ -74,7 +74,7 @@ export async function applyThemeCSS(plugin) {
         db.plugins.where("name").equals(plugin.name).modify({
           active: true,
         });
-        DB.set("csstheme", plugin.name);
+        DB.set("activeTheme", plugin.name);
         DB.set("css-theme", text);
       });
     } else {
@@ -126,7 +126,7 @@ export async function loadPlugin() {
   // get active plugins from db and load them into the page
   const plugins = await db.plugins.toArray();
   await plugins.forEach(async (plugin) => {
-    if (plugin.active) {
+    if (plugin.active && DB.get("activeTheme") == plugin.name) {
       if (plugin.type === "theme") {
         await applyThemeCSS(plugin);
       } else {
