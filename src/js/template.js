@@ -17,7 +17,7 @@ async function getLibs() {
     });
 
   await libs
-    .filter((lib) => lib.type === "css" && lib.active)
+    .filter((lib) => lib.type === "js" && lib.active)
     .forEach((lib) => {
       jslibs += `<script src="${lib.file}"></script>\n`;
     });
@@ -26,9 +26,6 @@ async function getLibs() {
 settings.subscribe(async (s) => {
   meta = await s.metaData.value;
 })
-
-
-
 
 export async function createTemplate(html, css, js) {
   await getLibs();
