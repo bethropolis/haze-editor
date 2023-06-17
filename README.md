@@ -3,7 +3,7 @@
 
 Haze Editor is an HTML, CSS, and JS code editor with version management, integrated Todo app, plugins, and more.
 
-LIVE: [haze-editor.vercel.app](https://haze-editor.vercel.app)
+LIVE: [haze-editor.vercel.app](https://haze-editor.vercel.app) <br>
 BACKUP: [bethropolis.github.io/haze-editor](https://bethropolis.github.io/haze-editor/)
 
 
