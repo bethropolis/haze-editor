@@ -3,6 +3,10 @@
 
 Haze Editor is an HTML, CSS, and JS code editor with version management, integrated Todo app, plugins, and more.
 
+LIVE: [haze-editor.vercel.app](https://haze-editor.vercel.app)
+BACKUP: [bethropolis.github.io/haze-editor](https://bethropolis.github.io/haze-editor/)
+
+
 ## Table of Contents
 - [Haze Editor](#haze-editor)
   - [Table of Contents](#table-of-contents)
@@ -28,7 +32,7 @@ Haze Editor is a HTML, CSS, and JS code editor that provides version management,
 To install and run Haze Editor locally, follow these steps:
 
 ```shell
-git clone https://github.com/haze-editor/haze-editor.git
+git clone https://github.com/bethropolis/haze-editor.git
 cd haze-editor
 npm install
 ```
