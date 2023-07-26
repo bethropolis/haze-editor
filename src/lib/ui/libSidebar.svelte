@@ -3,20 +3,13 @@
   import { db } from "../../db";
   import { customEventStore } from "../../store";
   import { Err, Success } from "../../js/toast";
+import { cacheFile } from "../../js/cache";
 
   let searchQuery = "";
   let libs = [];
   let addedLibs = [];
   let isLoading = false;
 
-  const cacheFile = async (fileUrl) => {
-    const cacheName = "libs-cache";
-    const cache = await caches.open(cacheName);
-    const response = await fetch(fileUrl);
-    const blob = await response.blob();
-    await cache.put(fileUrl, new Response(blob));
-    return true;
-  };
   const libAdd = async function (lib) {
     let type = lib.filename.split(".").pop();
     // @ts-ignore

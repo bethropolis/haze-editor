@@ -9,11 +9,9 @@ async function getLibs() {
   csslibs = "";
   jslibs = "";
   await libs
-    .filter((lib) => lib.type === "css")
+    .filter((lib) => lib.type === "css" && lib.active)
     .forEach((lib) => {
-      if (lib.active) {
         csslibs += `<link rel="stylesheet" href="${lib.file}" />\n`;
-      }
     });
 
   await libs
