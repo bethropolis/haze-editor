@@ -1,5 +1,7 @@
 # Haze Editor
 ![Haze Editor](githubassets/haze.png)
+[![MadeWithSvelte.com shield](https://madewithsvelte.com/storage/repo-shields/4519-shield.svg)](https://madewithsvelte.com/p/haze-editor/shield-link)
+
 
 Haze Editor is an HTML, CSS, and JS code editor with version management, integrated Todo app, plugins, and more.
 
