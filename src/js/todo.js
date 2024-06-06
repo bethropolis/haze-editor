@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { db } from "../db";
+import { db } from "../db/db";
 
 // Get all todos
 export async function getTodos() {

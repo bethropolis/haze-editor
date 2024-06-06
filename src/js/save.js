@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { db } from "../db";
+import { db } from "../db/db";
 import { code } from "../store";
 import { toast } from "./toast";
 

@@ -1,4 +1,4 @@
-import { DB } from "../db";
+import { DB } from "../db/db";
 import { active, code, customEventStore } from "../store";
 
 export function clearEditor() {

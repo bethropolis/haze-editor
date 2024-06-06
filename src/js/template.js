@@ -1,4 +1,4 @@
-import { db } from "../db";
+import { db } from "../db/db";
 import { settings } from "../store";
 // @ts-ignore
 const libs = await db.libs.toArray();

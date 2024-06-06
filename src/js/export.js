@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { DB, db } from "../db";
+import { DB, db } from "../db/db";
 import { settings } from "../store";
 import { createTemplate } from "./template";
 

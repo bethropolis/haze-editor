@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { writable } from "svelte/store";
-import { DB, db } from "./db";
+import { DB, db } from "./db/db";
 
 export const active = writable("code");
 export const activeTab = writable(null);

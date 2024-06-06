@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { db } from "../db";
+import { db } from "../db/db";
 import * as Diff from "diff";
 import { Err, Success, toast } from "./toast";
 import { Co } from "./confirm";
