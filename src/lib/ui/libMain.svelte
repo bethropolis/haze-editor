@@ -2,7 +2,7 @@
   // @ts-nocheck
 
   import { onMount } from "svelte";
-  import { db } from "../../db";
+  import { db } from "../../db/db";
   import { customEventStore } from "../../store";
   import { Err } from "../../js/toast";
   import Sideoptions from "../Sideoptions.svelte";

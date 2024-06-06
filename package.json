@@ -23,7 +23,7 @@
     "@codemirror/lang-html": "^6.4.3",
     "@codemirror/lang-javascript": "^6.1.8",
     "beercss": "^3.2.6",
-    "dexie": "^4.0.1-alpha.11",
+    "dexie": "^4.0.7",
     "diff": "^5.1.0",
     "sortablejs": "^1.15.0",
     "svelte-codemirror-editor": "^1.1.0"

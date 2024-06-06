@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
 
-  import { DB } from "../db";
+  import { DB } from "../db/db";
   import { settings } from "../store";
   import About from "./ui/about.svelte";
 

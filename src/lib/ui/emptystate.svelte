@@ -3,7 +3,7 @@
   import { createEventDispatcher, onMount  } from "svelte";
   import { nav } from "../../js/editor";
   import { viewActive } from "../../store";
-  import { DB } from '../../db.js';
+  import { DB } from '../../db/db.js';
   const dispatch = createEventDispatcher();
 
   export let no = 0;

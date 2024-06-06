@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
-  import { db } from "../../db";
+  import { db } from "../../db/db";
 
   let comments = [];
   const dispatch = createEventDispatcher();

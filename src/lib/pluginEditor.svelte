@@ -4,7 +4,7 @@
   import CodeMirror from "svelte-codemirror-editor";
   import { css } from "@codemirror/lang-css";
   import { onMount, onDestroy } from "svelte";
-  import { DB } from "../db.js";
+  import { DB } from "../db/db.js";
 
   let value = "";
   let language = css();

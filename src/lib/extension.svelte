@@ -1,6 +1,6 @@
 <script>
   import { pluginUrl } from "./../store.js";
-  import { DB } from "../db";
+  import { DB } from "../db/db.js";
   import { Err, Success } from "../js/toast";
   import Sideoptions from "./Sideoptions.svelte";
   import Plugin from "./ui/plugin.svelte";

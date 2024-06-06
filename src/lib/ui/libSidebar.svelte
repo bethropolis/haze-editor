@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { db } from "../../db";
+  import { db } from "../../db/db";
   import { customEventStore } from "../../store";
   import { Err, Success } from "../../js/toast";
 import { cacheFile } from "../../js/cache";

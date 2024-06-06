@@ -1,7 +1,7 @@
 <script>
   import { active } from "./../../store.js";
   import { onMount } from "svelte";
-  import { DB, db } from "../../db";
+  import { DB, db } from "../../db/db.js";
   import {
     applyThemeCSS,
     executePluginScript,
