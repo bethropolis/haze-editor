@@ -103,3 +103,11 @@ div[data-language="css"] .ͼb {
 .dark code .ͼd {
   color: #e06c75;
 }
+
+
+
+@media (max-width: 600px) {
+  body {
+    overflow: scroll;
+  }
+}

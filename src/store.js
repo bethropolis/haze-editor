@@ -5,6 +5,7 @@ import { DB, db } from "./db/db";
 export const active = writable("code");
 export const activeTab = writable(null);
 export const viewActive = writable("view");
+export const activeMobileCode = writable(true);
 
 export const lang = writable("html");
 const [ css = "",html = "", js = ""] = await db.save.toArray().then((files)=>{

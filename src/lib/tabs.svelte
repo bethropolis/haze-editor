@@ -1,7 +1,7 @@
 <script>
   import { activeTab, lang, viewActive } from "../store";
-  import Sideoptions from "./Sideoptions.svelte";
-  import Options from "./options.svelte";
+  import Sideoptions from "./code/Sideoptions.svelte";
+  import Options from "./code/options.svelte";
   import { onMount, createEventDispatcher } from "svelte";
 
   export let options = false;
@@ -35,7 +35,7 @@
         aria-controls={"tab-panel-" + index}
         title={tab?.label}
       >
-        <p class="large-text">{tab?.label}</p>
+        <span class="large-text">{tab?.label}</span>
       </a>
     {/each}
   {/if}
@@ -61,5 +61,4 @@
       <slot />
     </div>
   {/each}
-  <slot name="x"/>
 </div>
