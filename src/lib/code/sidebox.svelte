@@ -1,6 +1,7 @@
 <script>
   import { viewActive } from "../../store";
   import Emptystate from "../ui/emptystate.svelte";
+  import Console from "./console.svelte";
   import Viewer from "./viewer.svelte";
 </script>
 
@@ -10,7 +11,7 @@
     {#if $viewActive === "view"}
       <Viewer />
     {:else if $viewActive === "console"}
-      <Emptystate no={2} />
+      <Console />
     {/if}
   {/if}
 </main>

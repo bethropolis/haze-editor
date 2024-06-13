@@ -103,3 +103,24 @@ const defaultSettings =  {
 let s = DB.get("settings")||defaultSettings;
 
 export const settings = writable(s);
+
+
+
+export let terminalContent = writable([]);
+
+
+/**
+ * Adds content to the terminal.
+ * @param {string} content - The content to be added to the terminal.
+ */
+export function addToTerminal(content) {
+  terminalContent.update(value => [...value, content]);
+}
+
+
+/**
+ * Clears the terminal content.
+ */
+export function clearTerminal() {
+  terminalContent.set([]);
+}
