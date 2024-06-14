@@ -1,0 +1,206 @@
+:root {
+    --primary: #6272a4; /* Dracula Purple */
+    --on-primary: #f8f8f2; /* Light text */
+    --primary-container: #44475a; /* Dark background */
+    --on-primary-container: #f8f8f2; /* Light text */
+    --secondary: #ff79c6; /* Pink */
+    --on-secondary: #f8f8f2; /* Light text */
+    --secondary-container: #bd93f9; /* Purple */
+    --on-secondary-container: #f8f8f2; /* Light text */
+    --tertiary: #f1fa8c; /* Yellow */
+    --on-tertiary: #282a36; /* Dark background */
+    --tertiary-container: #50fa7b; /* Green */
+    --on-tertiary-container: #282a36; /* Dark background */
+    --selection: #44475a; /* Selection background */
+    --error: #ff5555; /* Red */
+    --on-error: #f8f8f2; /* Light text */
+    --error-container: #ffb86c; /* Orange */
+    --on-error-container: #282a36; /* Dark background */
+    --background: #282a36; /* Main background */
+    --body: #282a36; /* Main background */
+    --on-background: #f8f8f2; /* Light text */
+    --surface: #282a36; /* Main background */
+    --surface-container: var(--body);
+    --surface-container-low: var(--surface);
+    --on-surface: #f8f8f2; /* Light text */
+    --surface-variant: #44475a; /* Dark background */
+    --on-surface-variant: #f8f8f2; /* Light text */
+    --inverse-surface: #f8f8f2; /* Inverse light background */
+    --inverse-on-surface: #282a36; /* Inverse dark text */
+   --inverse-primary: #bd93f9; /* Purple */
+    --inverse-on-primary: #282a36; /* Dark background */
+    --code-text-color: #f8f8f2; /* Light text */
+    --code-added-color: #50fa7b; /* Green */
+    --code-removed-color: #ff5555; /* Red */
+    --added-line-color: rgba(80, 250, 123, 0.2); /* Green with transparency */
+    --removed-line-color: rgba(255, 85, 85, 0.2); /* Red with transparency */
+    --font-family: "Comic Sans MS", cursive, sans-serif; /* Example font stack */
+}
+
+body.dark {
+    --primary: #6272a4; /* Dracula Purple */
+    --on-primary: #f8f8f2; /* Light text */
+    --primary-container: #44475a; /* Dark background */
+    --on-primary-container: #f8f8f2; /* Light text */
+    --secondary: #ff79c6; /* Pink */
+    --on-secondary: #f8f8f2; /* Light text */
+    --secondary-container: #bd93f9; /* Purple */
+    --on-secondary-container: #f8f8f2; /* Light text */
+    --tertiary: #f1fa8c; /* Yellow */
+    --on-tertiary: #282a36; /* Dark background */
+    --tertiary-container: #50fa7b; /* Green */
+    --on-tertiary-container: #282a36; /* Dark background */
+    --selection: #44475a; /* Selection background */
+    --error: #ff5555; /* Red */
+    --on-error: #f8f8f2; /* Light text */
+    --error-container: #ffb86c; /* Orange */
+    --on-error-container: #282a36; /* Dark background */
+    --background: #282a36; /* Main background */
+    --body: #282a36; /* Main background */
+    --on-background: #f8f8f2; /* Light text */
+    --surface: #282a36; /* Main background */
+    --surface-container: var(--body);
+    --on-surface: #f8f8f2; /* Light text */
+    --surface-variant: #44475a; /* Dark background */
+    --on-surface-variant: #f8f8f2; /* Light text */
+    --inverse-surface: #f8f8f2; /* Inverse light background */
+    --inverse-on-surface: #282a36; /* Inverse dark text */
+    --inverse-primary: #bd93f9; /* Purple */
+    --inverse-on-primary: #282a36; /* Dark background */
+    --code-text-color: #f8f8f2; /* Light text */
+    --code-added-color: #50fa7b; /* Green */
+    --code-removed-color: #ff5555; /* Red */
+    --added-line-color: rgba(80, 250, 123, 0.2); /* Green with transparency */
+    --removed-line-color: rgba(255, 85, 85, 0.2); /* Red with transparency */
+    --font-family: "Comic Sans MS", cursive, sans-serif; /* Example font stack */
+}
+
+
+  
+html,
+body {
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    height: 100%;
+}
+
+a {
+    user-select: none;
+}
+
+html::-webkit-scrollbar {
+    width: 0;
+}
+
+body,
+nav {
+    transition: background 0.6s ease-in-out;
+}
+
+div.cm-scroller::-webkit-scrollbar {
+    width: 8px !important;
+    background: var(--primary) !important;
+}
+
+div.cm-scroller::-webkit-scrollbar-thumb {
+    background: var(--primary) !important;
+}
+
+code {
+    font-family: var(--font-family) !important;
+}
+
+.added {
+    color: var(--code-added-color) !important;
+    background-color: var(--added-line-color) !important;
+    padding: 0.2rem !important;
+}
+
+.removed {
+    color: var(--code-removed-color) !important;
+    background-color: var(--removed-line-color) !important;
+    padding: 0.2rem !important;
+}
+
+.cm-tooltip {
+    background-color: var(--primary-container) !important;
+}
+
+.ͼ2.cm-gutters {
+    background-color: var(--primary) !important;
+}
+
+.ͼ2 .cm-activeLine,
+.ͼ2 .cm-activeLineGutter {
+    background-color: var(--selection);
+}
+
+.ͼ2.cm-activeLineGutter {
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+    border-left-color: var(--primary) !important;
+}
+
+.dark code.ͼi {
+    color: #bd93f9 !important; /* Purple */
+}
+
+.dark code.ͼb {
+    color: #ff79c6 !important; /* Pink */
+}
+
+.cm-number,
+div[data-language="css"].ͼb {
+    color: #f1fa8c !important; /* Yellow */
+}
+
+.dark code.ͼe {
+    color: #50fa7b !important; /* Green */
+}
+
+.dark code.ͼg,
+.dark code.ͼj {
+    color: #8be9fd !important; /* Cyan */
+}
+
+.cm-error {
+    color: #ff5555 !important; /* Red */
+}
+
+.cm-qualifier,
+.cm-bracket {
+    color: #6272a4 !important; /* Dracula Purple */
+}
+
+.dark code.ͼc,
+.dark code.ͼi {
+    color: #f1fa8c !important; /* Yellow */
+}
+
+.dark code.ͼd {
+    color: #ff5555 !important; /* Red */
+}
+
+/* Additional styles for CodeMirror editor */
+.cm-editor {
+    background-color: var(--surface) !important;
+    color: var(--code-text-color) !important;
+}
+
+.cm-cursor {
+    border-left-color: var(--primary) !important;
+}
+
+.cm-panel,
+.cm-selection {
+    background-color: var(--primary-container) !important;
+}
+
+.cm-selectionMatch {
+    background-color: var(--secondary-container) !important;
+}
+
+.cm-gutters {
+    background-color: var(--surface-variant) !important;
+    border-right-color: var(--primary) !important;
+}

@@ -50,7 +50,7 @@
 
 <div class="page-container">
   {#each tabs as tab, index}
-  {#if tab?.label === $viewActive || tab?.label === $lang}
+  {#if tab?.label === $viewActive || tab?.label === $lang || tab?.label === $activeTab}
     <div
       class="page"
       class:active={activeTabIndex === index}

@@ -45,6 +45,7 @@
   onDestroy(unsubscribe);
 </script>
 
+  
 <CodeMirror
   bind:value
   lang={language}
@@ -54,6 +55,8 @@
       width: "100%",
       maxWidth: "100%",
       height: "calc(100dvh - 50px)",
+      marginBottom: "500px",
     },
   }}
 />
+

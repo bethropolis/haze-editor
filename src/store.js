@@ -58,7 +58,18 @@ export const tabTwo = writable([
 ]);
 
 // plugin url
-export const pluginUrl = writable(await getPluginUrl());
+export const pluginUrl = writable();
+
+(async () => {
+  try {
+    const url = await getPluginUrl();
+    pluginUrl.set(url);
+  } catch (error) {
+    console.error("Failed to fetch plugin URL:", error);
+  }
+})();
+
+
 // Create a writable store to hold custom events
 export const customEventStore = writable({ name: "", data: null });
 

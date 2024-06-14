@@ -53,6 +53,7 @@
       width: "100%",
       maxWidth: "100%",
       height: "100dvh",
+      marginBlockEnd: "500px",
     },
   }}
 />
