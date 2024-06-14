@@ -37,9 +37,9 @@ export const navItems = writable([
  * @type {import('svelte/store').Writable<CodeObject>}
  */
 export const code = writable({
-  html: html.content,
-  css: css.content,
-  js: js.content,
+  html: html?.content || "",
+  css: css?.content || "",
+  js: js?.content || "",
 });
 
 export const tabOne = writable([
