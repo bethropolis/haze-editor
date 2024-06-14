@@ -10,7 +10,7 @@ const consoleHandler = {
     if (typeof originalMethod === 'function') {
       return (...args) => {
         originalMethod.apply(target, args);
-        addToTerminal(`<span style="color: #0ea5e9">[${property.toUpperCase()}]</span> ${args.join(' ')}`);
+        addToTerminal(`<span style="color: var(--tertiary)">[${property.toUpperCase()}]</span> ${args.join(' ')}`);
       };
     }
 
@@ -20,14 +20,13 @@ const consoleHandler = {
 
 
 
-export function overrideGlobalConsole() {
-  if (typeof window !== 'undefined') {
-    window.console = new Proxy(originalConsole, consoleHandler);
-  } 
-}
+const customConsole = new Proxy(originalConsole, consoleHandler);
 
-export function restoreGlobalConsole() {
-  if (typeof window !== 'undefined') {
-    window.console = originalConsole;
-  } 
-}
+
+  // Listen for messages from the iframe
+  window.addEventListener('message', function(event) {
+    if (event.data.type) {
+      const message = `${event.data.message}\n`;
+      customConsole[event.data.type](message);  
+    }
+  }, false); 

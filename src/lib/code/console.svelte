@@ -3,9 +3,9 @@
     import { onMount } from 'svelte';
 
     // Sample terminal content
-    onMount(() => {
-      addToTerminal('<span style="color: #fde047">[INFO]</span> console calls will be logged here!');
-    });
+    // onMount(() => {
+    //   addToTerminal('<span style="color: #fde047">[INFO]</span> console calls will be logged here!');
+    // });
 </script>
 
 <div class="terminal">
@@ -26,8 +26,6 @@
     .terminal {
         font-family: 'Fira Code', monospace;
         font-size: 12px;
-        background-color: #2A323C;
-        color: #abb2bf;
         height: calc(100vh - 32px);
         display: flex;
         flex-direction: column;
@@ -38,7 +36,6 @@
         align-items: center;
         justify-content: space-between;
         padding: 2px 16px;
-        background-color: #1e2228;
     }
 
     .terminal-title {

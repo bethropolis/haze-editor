@@ -1,6 +1,5 @@
 <script>
   import { viewActive } from "../../store";
-  import Emptystate from "../ui/emptystate.svelte";
   import Console from "./console.svelte";
   import Viewer from "./viewer.svelte";
 </script>
