@@ -1,6 +1,4 @@
 <script>
-  // @ts-nocheck
-
   import { onMount } from "svelte";
   import { db } from "../../db/db";
   import { customEventStore } from "../../store";
@@ -11,6 +9,7 @@
   let csslibs = [];
   let jslibs = [];
   let libUrl = "";
+  let activeTab = "css";
 
   async function getLibs() {
     const libs = await db.libs.toArray();
@@ -53,53 +52,58 @@
   $: $customEventStore && $customEventStore.name === "add-lib" && getLibs();
 </script>
 
-<div class="grid s12 responsive main">
+<div class="s12 responsive main">
   <nav class="s12">
     <div class="max" />
     <Sideoptions />
   </nav>
-  <div class="s12 large-padding box">
-    <nav>
-      <h5>CSS Libraries</h5>
-    </nav>
-    <div class="list fill">
-      {#each csslibs as lib}
-        <div class="row padding">
-          <label class="checkbox" on:click={() => toggleActivate(lib)}>
-            <input type="checkbox" checked={lib.active} />
-            <span />
-          </label>
-          <div class="max">{lib.file}</div>
-          <a on:click={() => deleteLib(lib)} class="red-text">
-            <i>delete</i>
-          </a>
-        </div>
-      {/each}
+  <div>
+    <div class="tabs left-align min">
+      <a href="#lubraries@css" class:active={activeTab == "css"} on:click={()=>activeTab = "css"}>CSS</a>
+      <a href="#lubraries@js"  class:active={activeTab == "js"} on:click={()=>activeTab = "js"}>Javascript</a>
     </div>
-  </div>
-  <div class="s12 large-padding box">
-    <nav>
-      <h5>JavaScript Libraries</h5>
-    </nav>
-    <div class="list fill">
-      {#if jslibs.length > 0}
-        {#each jslibs as lib}
+    <div class="page padding  left" class:active={activeTab == "css"}>
+      <div class="list fill">
+        {#if csslibs.length > 0}
+        {#each csslibs as lib}
           <div class="row padding">
-            <label class="checkbox" on:click={() => toggleActivate(lib)}>
+            <label class="checkbox" on:click={() => toggleActivate(lib)} on:keydown={() => {}}>
               <input type="checkbox" checked={lib.active} />
               <span />
             </label>
             <div class="max">{lib.file}</div>
-            <a on:click={() => deleteLib(lib)} class="red-text">
+            <a href="#delete" on:click={() => deleteLib(lib)} class="red-text" >
               <i>delete</i>
             </a>
           </div>
         {/each}
-      {:else}
-        <p class="blue-text">Note: all libraries are cached on addition</p>
-      {/if}
+        {:else}
+          <p class="blue-text">Note: all libraries are cached on addition</p>
+        {/if}
+      </div>
+    </div>
+    <div class="page padding left" class:active={activeTab == "js"}>
+      <div class="list fill">
+        {#if jslibs.length > 0}
+          {#each jslibs as lib}
+            <div class="row padding">
+              <label class="checkbox" on:click={() => toggleActivate(lib)}  on:keydown={() => {}}>
+                <input type="checkbox" checked={lib.active} />
+                <span />
+              </label>
+              <div class="max">{lib.file}</div>
+              <a href="#delete" on:click={() => deleteLib(lib)} class="red-text">
+                <i>delete</i>
+              </a>
+            </div>
+          {/each}
+        {:else}
+          <p class="blue-text">Note: all libraries are cached on addition</p>
+        {/if}
+      </div>
     </div>
   </div>
+ 
   <div class="s12 row padding input-container">
     <div class="field border max">
       <input type="text" placeholder="Add a library URL" bind:value={libUrl} />
@@ -110,16 +114,15 @@
 
 <style>
   .main {
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-    min-height: 100vh;
-    overflow: scroll;
+    padding: 10px;
+    position: relative;
+    height: calc(100dvh - 20dvh);
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .box {
-    height: 100%;
-    overflow: hidden;
-  }
+
 
   .list {
     min-height: 200px;
@@ -164,7 +167,12 @@
   }
 
   .input-container {
+    height: fit-content;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 20;
   }
 </style>

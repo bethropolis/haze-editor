@@ -3,8 +3,11 @@ import { DB, db } from "../db/db";
 import { setThemeMode } from "./editor";
 import { Err } from "./toast";
 
+
+
 const cacheName = "plugin-cache";
 const cache = await caches.open(cacheName);
+
 export async function installPlugin(plugin) {
   try {
     const response = await fetch(plugin.file, { cache: "no-cache" });

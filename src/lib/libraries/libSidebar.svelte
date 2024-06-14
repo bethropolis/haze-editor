@@ -1,24 +1,36 @@
 <script>
   import { onMount } from "svelte";
-  import { db } from "../../db/db";
+  import { db, libDB } from "../../db/db";
   import { customEventStore } from "../../store";
   import { Err, Success } from "../../js/toast";
-import { cacheFile } from "../../js/cache";
+  import { cacheFile } from "../../js/cache";
 
   let searchQuery = "";
   let libs = [];
   let addedLibs = [];
   let isLoading = false;
 
+  /**
+   * @typedef {import("../../db/table/libs").Lib} Lib
+   *  
+   * */
+
+  /**
+   * Adds a library to the sidebar.
+   *
+   * @param {Lib & { filename: string, latest: string }} lib - The library to add
+   */
   const libAdd = async function (lib) {
     let type = lib.filename.split(".").pop();
-    // @ts-ignore
-    await db.libs.add({
+
+    libDB.addLib({
       name: lib.name,
       file: lib.latest,
       type,
       active: true,
     });
+
+
     $customEventStore = { name: "add-lib", data: true };
     lib.active = true;
     await cacheFile(lib.latest);
@@ -59,11 +71,10 @@ import { cacheFile } from "../../js/cache";
   }
 
   async function clearCache() {
-  const cacheName = "libs-cache";
-  const result = await caches.delete(cacheName);
-  Success(`Cache ${cacheName} deleted: ${result}`);
-}
-
+    const cacheName = "libs-cache";
+    const result = await caches.delete(cacheName);
+    Success(`Cache ${cacheName} deleted: ${result}`);
+  }
 
   onMount(async () => {
     searchLibraries();
@@ -73,11 +84,11 @@ import { cacheFile } from "../../js/cache";
 <main>
   <nav class="small-padding">
     <h5 class="max small">Libraries</h5>
-    <a href="#"
+    <a href="#dropdown"
       ><i>more_vert</i>
       <menu class="right no-wrap">
-        <a href="#" on:click={clearLibraries}> Clear all</a>
-        <a href="#" on:click={clearCache}> Clear cache</a>
+        <a href="#clearLibs" on:click={clearLibraries}> Clear all</a>
+        <a href="#clearCache" on:click={clearCache}> Clear cache</a>
       </menu>
     </a>
   </nav>
@@ -89,7 +100,7 @@ import { cacheFile } from "../../js/cache";
       on:input={handleSearchInput}
     />
     {#if isLoading}
-      <a class="loader" />
+      <span class="loader" />
     {/if}
   </div>
   <hr />
@@ -102,9 +113,11 @@ import { cacheFile } from "../../js/cache";
             <span class="orange-text">added</span>
           {/if}
           <div class="max" />
-          <a href="#" class="stars">
+          <a href="#stars" class="stars">
             <i class="tiny">star</i>
-            <span class="small-text">{formatStarCount(lib.github?.stargazers_count)}</span>
+            <span class="small-text"
+              >{formatStarCount(lib.github?.stargazers_count)}</span
+            >
           </a>
           <a
             href="https://github.com/{lib.github?.user}/{lib.github?.repo}"
@@ -113,7 +126,7 @@ import { cacheFile } from "../../js/cache";
           >
             <i class="tiny">home</i>
           </a>
-          <a  on:click={() => libAdd(lib)}>
+          <a href="#addLib" on:click={() => libAdd(lib)}>
             <i class="tiny">add</i>
           </a>
         </nav>
@@ -140,6 +153,10 @@ import { cacheFile } from "../../js/cache";
   .libs::-webkit-scrollbar-thumb {
     background-color: var(--secondary-container);
     border-radius: 1px;
+  }
+
+  .field{
+    width: 96%;
   }
 
   .libs::-webkit-scrollbar-track {

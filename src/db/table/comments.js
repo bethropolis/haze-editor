@@ -34,6 +34,8 @@ export const commentDB = {
         return await db.comments.add(comment);
     },
 
+    
+
     updateComment: async (id, comment) => {
         return await db.comments.update(id, comment);
     },

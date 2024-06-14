@@ -10,7 +10,7 @@ import { db } from '../db';
  * @typedef {object} SaveDB
  * @property {() => Promise<Save[]>} getAllSaves - Get all saves
  * @property {(id: number) => Promise<Save>} getSave - Get a save by id
- * @property {(save: Save) => Promise<number>} addSave - Add a new save
+ * @property {(save: Save) => Promise<number | string>} addSave - Add a new save
  * @property {(id: number, save: Save) => Promise<number>} updateSave - Update a save by id
  * @property {(id: number) => Promise<void>} deleteSave - Delete a save by id
  */
@@ -29,21 +29,25 @@ export const saveDB = {
 
     /**
      * Get a save by id
-     * @param {number} id - The id of the save
+     * @param {number | string} id - The id of the save
      * @returns {Promise<Save>} - A promise that resolves to the save object
      */
     getSave: async (id) => {
         return await db.save.get(id);
     },
 
+
+
     /**
      * Add a new save
      * @param {Save} save - The save object to add
-     * @returns {Promise<number>} - A promise that resolves to the ID of the added save
+     * @returns {Promise<number|string>} - A promise that resolves to the ID of the added save
      */
     addSave: async (save) => {
         return await db.save.add(save);
     },
+
+
 
     /**
      * Update a save by id

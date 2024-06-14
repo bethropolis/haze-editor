@@ -11,7 +11,7 @@ import { db } from '../db';
 /**
  * @typedef {object} ChangeDB
  * @property {() => Promise<Change[]>} getAllChanges - Get all changes
- * @property {(id: number) => Promise<Change>} getChange - Get a change by id
+ * @property {(id: number) => Promise<Change[]>} getChange - Get a change by id
  * @property {(change: Change) => Promise<number>} addChange - Add a new change
  * @property {(id: number, change: Change) => Promise<number>} updateChange - Update a change by id
  * @property {(id: number) => Promise<void>} deleteChange - Delete a change by id
@@ -26,11 +26,13 @@ export const changeDB = {
     },
 
     getChange: async (id) => {
-        return await db.changes.get(id);
+        return await db.changes.where("commentId")
+        .equals(id)
+        .toArray();
     },
 
     addChange: async (change) => {
-        return await db.changes.add(change);
+        return await db.changes.put(change);
     },
 
     updateChange: async (id, change) => {

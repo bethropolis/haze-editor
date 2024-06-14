@@ -4,14 +4,15 @@ import { settings } from "../store";
 const libs = await db.libs.toArray();
 let csslibs = "";
 let jslibs = "";
-let meta = '';
+let meta = "";
+
 async function getLibs() {
   csslibs = "";
   jslibs = "";
   await libs
     .filter((lib) => lib.type === "css" && lib.active)
     .forEach((lib) => {
-        csslibs += `<link rel="stylesheet" href="${lib.file}" />\n`;
+      csslibs += `<link rel="stylesheet" href="${lib.file}" />\n`;
     });
 
   await libs
@@ -21,9 +22,20 @@ async function getLibs() {
     });
 }
 
+let consoleMessage = `
+(function () {
+  var consoleMethods = ["log", "error", "warn", "info"];
+  consoleMethods.forEach(function (method) {
+    console[method] = function (message) {
+      window.parent.postMessage({ type: method, message: message }, "*");
+    };
+  });
+})();
+`;
+
 settings.subscribe(async (s) => {
   meta = await s.metaData.value;
-})
+});
 
 export async function createTemplate(html, css, js) {
   await getLibs();
@@ -46,7 +58,14 @@ export async function createTemplate(html, css, js) {
           </style>
         </head>
         <body>${html || ""}
-          <script>${js}</script>
+          <script>
+          ${consoleMessage}
+          try {
+          ${js}
+          } catch (error) {
+            console.error(error);
+          }
+          </script>
         </body>
       </html>
     `;

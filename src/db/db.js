@@ -63,7 +63,7 @@ export class HazeDB extends Dexie {
     /** @type {Dexie.Table<File, number>} */
     this.files = this.table("files");
 
-    /** @type {Dexie.Table<Save, number>} */
+    /** @type {Dexie.Table<Save, number | string>} */
     this.save = this.table("save");
 
     /** @type {Dexie.Table<Plugin, number>} */

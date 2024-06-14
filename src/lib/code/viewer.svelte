@@ -2,6 +2,7 @@
   import { code, customEventStore } from "../../store.js";
   import { createTemplate } from "../../js/template.js";
   import { onMount } from "svelte";
+  import "../../js/console.js";
 
   let viewer = null;
   let combinedCode = null;

@@ -1,37 +1,41 @@
 // @ts-nocheck
-import { db } from "../db/db";
+import { branchDB, changeDB, commentDB, fileDB, saveDB } from "../db/db";
 import * as Diff from "diff";
 import { Err, Success, toast } from "./toast";
 import { Co } from "./confirm";
 
 export const commitFiles = async function (comment = "") {
-   let added = 0;
+  let added = 0;
   let removed = 0;
   // current
-  const html = await db.save.get("html").then((file) => {
+  const html = await saveDB.get("html").then((file) => {
     return file?.content || "";
   });
-  const css = await db.save.get("css").then((file) => {
+
+  const css = await saveDB.get("css").then((file) => {
     return file?.content || "";
   });
-  const js = await db.save.get("js").then((file) => {
+
+  const js = await saveDB.get("js").then((file) => {
     return file?.content || "";
   });
 
   // previous
-  const htmlStored = await db.files.get("html").then((file) => {
+  const htmlStored = await fileDB.get("html").then((file) => {
     if (file) {
       return file?.content;
     }
     return "";
   });
-  const cssStored = await db.files.get("css").then((file) => {
+
+  const cssStored = await fileDB.get("css").then((file) => {
     if (file) {
       return file?.content;
     }
     return "";
   });
-  const jsStored = await db.files.get("js").then((file) => {
+
+  const jsStored = await fileDB.get("js").then((file) => {
     if (file) {
       return file?.content;
     }
@@ -41,6 +45,7 @@ export const commitFiles = async function (comment = "") {
   const options = {
     ignoreWhitespace: true,
   };
+
   // diff html, css, and js in parallel
   const [htmlDifferences, cssDifferences, jsDifferences] = await Promise.all([
     Diff.diffLines(htmlStored, html, options),
@@ -73,7 +78,6 @@ export const commitFiles = async function (comment = "") {
     }
   });
 
-
   // Insert the changes into the `changes` table
   const differences = [htmlDifferences, cssDifferences, jsDifferences];
   const filesChanged = differences.reduce(
@@ -84,20 +88,23 @@ export const commitFiles = async function (comment = "") {
   if (!filesChanged.length) return;
   if (comment == "") return;
 
-  let commentId = await commitComment({comment,changes:{added, removed}}).then((id) => {
+  let commentId = await commitComment({
+    comment,
+    changes: { added, removed },
+  }).then((id) => {
     return id;
   });
 
   const store = { commentId, files: filesChanged, differences };
-  await db.changes.put(store);
+  await changeDB.addChange(store);
   const files = [
     { name: "html", content: html },
     { name: "css", content: css },
     { name: "js", content: js },
   ];
 
-  // @ts-ignore
-  db.files.bulkPut(files);
+  await fileDB.addBulk(files);
+
   return true;
 };
 
@@ -108,9 +115,9 @@ function didItChange(file) {
   return false;
 }
 
-export async function commitComment(comment , user = 1) {
-  let id = await db.comments
-    .add({
+export async function commitComment(comment, user = 1) {
+  let id = await commentDB
+    .addComment({
       comment: comment.comment,
       userId: user,
       changes: comment.changes,
@@ -125,14 +132,13 @@ export async function commitComment(comment , user = 1) {
 export const getChanges = async function (commentId) {
   try {
     // As an array, get the changes where the commentId matches
-    const changes = await db.changes
-      .where("commentId")
-      .equals(commentId)
-      .toArray();
+    const changes = await changeDB.getChange(commentId);
+
 
     return changes;
   } catch (err) {
     Err("Failed to get changes");
+    console.error(err);
     return false;
   }
 };
@@ -144,15 +150,15 @@ export const clear = async function () {
   if (await result) {
     // User confirmed clearing
     await Promise.all([
-      db.changes.clear(),
-      db.comments.clear(),
-      db.files.clear(),
-      db.branches.clear(),
+      commentDB.clear(),
+      changeDB.clear(),
+      fileDB.clear(),
+      branchDB.clear(),
     ]);
     Success("data Cleared");
     return true;
   } else {
     toast("Cancelled", "info");
-    return false
+    return false;
   }
 };

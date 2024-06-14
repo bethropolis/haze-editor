@@ -2,7 +2,7 @@ import { db } from '../db';
 
 /**
  * @typedef {object} Lib
- * @property {number} id
+ * @property {number} [id]
  * @property {string} name
  * @property {string} file
  * @property {string} type

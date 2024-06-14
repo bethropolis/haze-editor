@@ -2,7 +2,7 @@
   import Emptystate from "../ui/emptystate.svelte";
   import ChangesMainBody from "./changesMainBody.svelte";
   import Tabs from "../tabs.svelte";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { tabOne } from "../../store";
 
   export let changes = {};
@@ -34,6 +34,7 @@
   const updateCode = async function () {
     const lang = tabs[activeTabIndex]?.lang;
     const index = $tabOne.findIndex((tab) => tab.lang === lang);
+    console.log(changes)
     code = await changes.differences[index];
   };
 
@@ -41,19 +42,26 @@
     await updateTabs();
     activeTabIndex = event.detail;
     await updateCode();
+
+    console.log(activeTabIndex)
   };
 
   async function handleSelect(event) {
     await dispatch("select", event.detail);
   }
 
+  onMount(()=>{
 
-  $: changes && updateTabs();
+  })
+
+  $: {
+    changes && updateTabs();
+  }
 </script>
 
 <main>
   {#if changes}
-    <Tabs {tabs} options={true} on:tab={updateActiveIndex}>
+    <Tabs {tabs} options={true}  on:tab={updateActiveIndex}>
       <ChangesMainBody bind:code />
     </Tabs>
   {:else if number}

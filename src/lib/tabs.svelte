@@ -50,6 +50,7 @@
 
 <div class="page-container">
   {#each tabs as tab, index}
+  {#if tab?.label === $viewActive || tab?.label === $lang}
     <div
       class="page"
       class:active={activeTabIndex === index}
@@ -59,6 +60,7 @@
       tabindex={activeTabIndex === index ? 0 : -1}
     >
       <slot />
-    </div>
+    </div> 
+  {/if}
   {/each}
 </div>

@@ -11,6 +11,7 @@ import { db } from '../db';
  * @property {() => Promise<File[]>} getAllFiles - Get all files
  * @property {(id: number) => Promise<File>} getFile - Get a file by id
  * @property {(file: File) => Promise<number>} addFile - Add a new file
+ * @property {(file: File[]) => Promise<number>} addBulk - Add a new files
  * @property {(id: number, file: File) => Promise<number>} updateFile - Update a file by id
  * @property {(id: number) => Promise<void>} deleteFile - Delete a file by id
  */
@@ -45,6 +46,10 @@ export const fileDB = {
         return await db.files.add(file);
     },
 
+    addBulk: async (files) => {
+        return await db.files.bulkPut(files);
+    },
+
     /**
      * Update a file by id
      * @param {number} id - The id of the file to update
@@ -54,6 +59,8 @@ export const fileDB = {
     updateFile: async (id, file) => {
         return await db.files.update(id, file);
     },
+
+
 
     /**
      * Delete a file by id
