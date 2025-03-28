@@ -10,22 +10,23 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.0.3",
-    "@tsconfig/svelte": "^4.0.1",
-    "svelte": "^3.57.0",
-    "svelte-check": "^2.10.3",
+    "@sveltejs/vite-plugin-svelte": "^3.0.4",
+    "@tsconfig/svelte": "^5.0.4",
+    "svelte": "^4.2.19",
+    "svelte-check": "^4.1.5",
     "tslib": "^2.5.0",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^5.0.0"
   },
   "dependencies": {
     "@codemirror/lang-css": "^6.2.0",
     "@codemirror/lang-html": "^6.4.3",
     "@codemirror/lang-javascript": "^6.1.8",
-    "beercss": "^3.2.6",
+    "beercss": "^3.9.7",
     "dexie": "^4.0.7",
     "diff": "^5.1.0",
     "sortablejs": "^1.15.0",
-    "svelte-codemirror-editor": "^1.1.0"
+    "svelte-codemirror-editor": "^1.1.0",
+    "svelte-json-tree": "^2.2.0"
   }
 }
