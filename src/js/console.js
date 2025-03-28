@@ -1,32 +1,72 @@
-// console-override.js
-import { addToTerminal } from "../store.js";
+import * as loggerModule from "./logger"; // imports log, info, warn and error
 
-const originalConsole = { ...console };
+/**
+ * A logger object that provides a subset of the Console methods.
+ * Includes methods for logging messages, informational messages, warnings, and errors.
+ * 
+ * @type {Pick<Console, "log" | "info" | "warn" | "error">}
+ */
+const logger = loggerModule;
 
-const consoleHandler = {
-  get(target, property, receiver) {
-    const originalMethod = target[property];
-
-    if (typeof originalMethod === 'function') {
-      return (...args) => {
-        originalMethod.apply(target, args);
-        addToTerminal(`<span style="color: var(--tertiary)">[${property.toUpperCase()}]</span> ${args.join(' ')}`);
-      };
-    }
-
-    return originalMethod;
-  }
+/**
+ * Exposes the logger to the global scope for debugging purposes.
+ * Use this function cautiously to avoid global pollution.
+ */
+export const exposeLogger = () => {
+  window.logger = logger;
 };
 
 
 
-const customConsole = new Proxy(originalConsole, consoleHandler);
+/**
+ * An array of console method names that can be used for logging 
+ * and debugging purposes.
+ * 
+ * @type {Array<keyof Console>}
+ */
+const CONSOLE_METHODS = ["log", "info", "warn", "error"];
 
+const originalConsole = Object.fromEntries(
+  CONSOLE_METHODS.map((method) => [method, console[method].bind(console)])
+);
 
-  // Listen for messages from the iframe
-  window.addEventListener('message', function(event) {
-    if (event.data.type) {
-      const message = `${event.data.message}\n`;
-      customConsole[event.data.type](message);  
+/**
+ * Patches the global console object methods to send output to both
+ * the original console and a custom logger.
+ * 
+ * @function
+ * @returns {void}
+ * 
+ * @description
+ * For each method name in CONSOLE_METHODS, replaces console[method]
+ * with a new function that calls both originalConsole[method] and
+ * logger[method] with the same arguments.
+ * 
+ * @example
+ * patchConsole();
+ * console.log('Hello world'); // Outputs to both original console and custom logger
+ * 
+ * @requires {string[]} CONSOLE_METHODS - Array of console method names to patch
+ * @requires {Console} originalConsole - Original console object
+ * @requires {Object.<string, function>} logger - Custom logger object
+ */
+export const patchConsole = () => {
+  for (const method of CONSOLE_METHODS) {
+    console[method] = (...args) => {
+        originalConsole[method](...args);
+        logger[method](...args);
+    };
+  }
+};
+
+export const restoreConsole = () => {
+  for (const method of CONSOLE_METHODS) {
+    if (console[method] === logger[method]) {
+      console[method] = originalConsole[method];
     }
-  }, false); 
+  }
+};
+
+// Initialize console patching
+patchConsole();
+

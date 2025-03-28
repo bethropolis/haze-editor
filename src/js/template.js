@@ -24,10 +24,12 @@ async function getLibs() {
 
 let consoleMessage = `
 (function () {
-  var consoleMethods = ["log", "error", "warn", "info"];
+  // Access parent console directly
+  var consoleMethods = ["log", "info", "warn", "error"];
+  
   consoleMethods.forEach(function (method) {
-    console[method] = function (message) {
-      window.parent.postMessage({ type: method, message: message }, "*");
+    console[method] = function (...args) {
+      window.parent.logger[method](...args);
     };
   });
 })();
@@ -37,9 +39,9 @@ settings.subscribe(async (s) => {
   meta = await s.metaData.value;
 });
 
+
 export async function createTemplate(html, css, js) {
   await getLibs();
-  console.debug(csslibs, jslibs);
   return `
       <html>
         <head>

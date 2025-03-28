@@ -49,7 +49,7 @@
 
   <div class="list margin medium-margin">
     <h5 class="grey-text">
-      Commits.<span class="badge medium-text primary-container fill"
+      <span>Commits.</span> <span class="medium-text primary-container fill"
         >{commentsNumber}</span
       >
     </h5>
@@ -68,5 +68,12 @@
   .badge {
     top: 50%;
     transform: translate(50%, -50%);
+  }
+
+  h5{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width: 100%;
   }
 </style>

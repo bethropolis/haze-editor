@@ -1,6 +1,6 @@
 <script>
   import { viewActive } from "../../store";
-  import Console from "./console.svelte";
+  import Terminal from "./terminal.svelte";
   import Viewer from "./viewer.svelte";
 </script>
 
@@ -10,7 +10,7 @@
     {#if $viewActive === "view"}
       <Viewer />
     {:else if $viewActive === "console"}
-      <Console />
+       <Terminal/>
     {/if}
   {/if}
 </main>

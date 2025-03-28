@@ -21,21 +21,21 @@ export const commitFiles = async function (comment = "") {
   });
 
   // previous
-  const htmlStored = await fileDB.get("html").then((file) => {
+  const htmlStored = await fileDB.getFile("html").then((file) => {
     if (file) {
       return file?.content;
     }
     return "";
   });
 
-  const cssStored = await fileDB.get("css").then((file) => {
+  const cssStored = await fileDB.getFile("css").then((file) => {
     if (file) {
       return file?.content;
     }
     return "";
   });
 
-  const jsStored = await fileDB.get("js").then((file) => {
+  const jsStored = await fileDB.getFile("js").then((file) => {
     if (file) {
       return file?.content;
     }
