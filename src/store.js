@@ -14,7 +14,7 @@ export const lang = writable("html");
  * Retrieves CSS, HTML, and JS saves from the database.
  * @returns {Promise<[Save, Save, Save]>} A promise that resolves to an array containing the CSS, HTML, and JS saves.
  */
-const [css, html, js] = await saveDB.getAllSaves();
+const [css, html, js] = await saveDB.getAll();
 
 export const navItems = writable([
   { icon: "code", label: "code" }, // the code editor
@@ -133,19 +133,18 @@ let s = DB.get("settings") || defaultSettings;
 
 export const settings = writable(s);
 
-export let terminalContent = writable([]);
 
 /**
- * Adds content to the terminal.
- * @param {string} content - The content to be added to the terminal.
+ * A writable store that holds an array of console log entries.
+ * Each entry is an object with { message, level, timestamp }.
+ * @type {import('svelte/store').Writable<{ args: any[], level: 'log' | 'info' | 'warn' | 'error', timestamp: Date }[]>}
  */
-export function addToTerminal(content) {
-  terminalContent.update((value) => [...value, content]);
-}
+export let consoleLogStore = writable([]);
+
 
 /**
  * Clears the terminal content.
  */
 export function clearTerminal() {
-  terminalContent.set([]);
+  consoleLogStore.set([]);
 }
