@@ -8,7 +8,15 @@ import * as loggerModule from "./logger"; // imports log, info, warn and error
  */
 const logger = loggerModule;
 
-window.logger = logger;
+/**
+ * Exposes the logger to the global scope for debugging purposes.
+ * Use this function cautiously to avoid global pollution.
+ */
+export const exposeLogger = () => {
+  window.logger = logger;
+};
+
+
 
 /**
  * An array of console method names that can be used for logging 

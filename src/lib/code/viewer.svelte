@@ -3,6 +3,8 @@
   import { createTemplate } from "../../js/template.js";
   import { onMount } from "svelte";
   import "../../js/console.js";
+  import { exposeLogger } from "../../js/console.js";
+
 
   let viewer = null;
   let combinedCode = null;
@@ -21,6 +23,8 @@
   }
 
   onMount(async () => {
+    exposeLogger();
+    
     try {
       combinedCode = await createTemplate($code.html, $code.css, $code.js);
       viewer.srcdoc = combinedCode || "";
