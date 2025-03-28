@@ -52,6 +52,7 @@
   main {
     height: 400px;
     overflow-y: auto;
+    user-select: none;
   }
 
   main::-webkit-scrollbar {

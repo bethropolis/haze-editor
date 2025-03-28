@@ -5,7 +5,10 @@
   import { createEventDispatcher, onMount } from "svelte";
   import { tabOne } from "../../store";
 
-  export let changes = {};
+  export let changes = {
+    files: [],
+    differences: []
+  };
   export let number;
   let tabs = [];
   let code = null;
@@ -34,7 +37,6 @@
   const updateCode = async function () {
     const lang = tabs[activeTabIndex]?.lang;
     const index = $tabOne.findIndex((tab) => tab.lang === lang);
-    console.log(changes)
     code = await changes.differences[index];
   };
 
@@ -43,7 +45,6 @@
     activeTabIndex = event.detail;
     await updateCode();
 
-    console.log(activeTabIndex)
   };
 
   async function handleSelect(event) {
